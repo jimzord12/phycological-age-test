@@ -129,6 +129,7 @@ export function scoreDimension(
 /**
  * Score all five dimensions and the Structured Maturity Index (DOMAIN §9.2–§9.4).
  * The index is only defined when every dimension is reportable; otherwise null.
+ * See docs/DOMAIN-DECISIONS.md DD-1 (null index) and DD-3 (profile balance).
  */
 export function scoreStructuredAssessment(
   answers: readonly StructuredAnswer[],

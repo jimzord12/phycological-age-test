@@ -74,7 +74,7 @@ export function classifyExerciseContent(
 }
 
 /**
- * Narrative confidence per DOMAIN §11.5.
+ * Narrative confidence per DOMAIN §11.5. See docs/DOMAIN-DECISIONS.md DD-2.
  *
  * The Domain doc's "Low" band ("only one short exercise contains useful
  * content") corresponds to a not-scored content level (no exercise meets the
