@@ -100,3 +100,37 @@ does **not** trigger the deduction (strict "more than"). The deduction applies o
 regression toward `>= 75`.
 
 **Implemented in:** `src/domain/confidence.ts` (`CONSISTENCY_PAIRS`, deduction loop).
+
+---
+
+## DD-5 — Vercel AI SDK as the provider-agnostic AI layer
+
+**Source:** PRD §15.1 ("provider-agnostic"), §15.2 ("swapping providers requires only env
+changes"), §15.8 ("AI_PROVIDER=none must leave deterministic flow unaffected"), §11 ("keys
+server-only"). I010 originally called for a hand-rolled `AnalysisProvider` interface with
+two custom adapters.
+
+**Decision:** Use the **Vercel AI SDK** (`ai` package) with `@ai-sdk/anthropic` and
+`@ai-sdk/openai` provider packages instead of hand-rolled adapters.
+
+- Provider swap is still purely env-driven (`AI_PROVIDER`, `AI_MODEL`, `*_BASE_URL`,
+  `AI_API_KEY`) — no core code changes required.
+- The Z.AI GLM Anthropic-compat endpoint (`https://api.z.ai/api/anthropic`) is covered by
+  `createAnthropic({ baseURL: ... })`. The Z.AI OpenAI-compat endpoint is covered by
+  `createOpenAI({ baseURL: ... })`.
+- `generateObject()` with a Zod schema replaces hand-rolled JSON parsing and gives
+  type-safe, schema-validated structured output — consistent with the project's use of Zod
+  throughout.
+- Retry and timeout handling come from the SDK, not custom code.
+- `src/server/ai-provider.ts` remains a thin wrapper: the only file in the codebase that
+  imports from `ai` or `@ai-sdk/*`. Domain layer stays pure (no AI SDK imports there).
+
+**Rationale:** The SDK covers all PRD acceptance criteria and eliminates a substantial
+amount of bespoke plumbing (adapter pattern, JSON validation, retry logic, streaming
+primitives) that would need to be maintained. The functional overlap between the planned
+custom adapters and what the SDK provides is near-total; building the adapters by hand would
+be reinventing a well-maintained, widely-adopted library. First-class Next.js App Router
+support is an additional fit.
+
+**Implemented in:** `src/server/ai-provider.ts` (when I010 lands); env vars documented in
+`docs/issues/I010-ai-provider-abstraction.md`.

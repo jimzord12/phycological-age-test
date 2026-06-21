@@ -1,6 +1,6 @@
 # I002 — `POST /api/v1/assessments/score`
 
-- **Status:** ⬜ not started
+- **Status:** ✅ done
 - **Phase:** A (API foundation)
 - **Depends on:** Phase 0 (domain core)
 - **Complexity:** 3
@@ -28,14 +28,14 @@ client-calculated score (PRD §11, §17). The domain provides `validateAnswerSet
 
 ## Acceptance criteria
 
-- [ ] Scores are recomputed server-side; identical answers yield identical results.
-- [ ] Unknown questions/options and duplicate answers are rejected with field-level errors.
-- [ ] Version mismatch is rejected.
-- [ ] `Not applicable` excluded from scoring; insufficient-data thresholds enforced.
-- [ ] SMI is `null` when any dimension is insufficient (DOMAIN-DECISIONS DD-1).
-- [ ] Age metaphor present only when `includeAgeMetaphor` is true.
-- [ ] `assessmentId` is opaque and stateless; no raw answers logged (PRD §10.3, §20).
-- [ ] Contract tests cover recomputation and rejection paths.
+- [x] Scores are recomputed server-side; identical answers yield identical results.
+- [x] Unknown questions/options and duplicate answers are rejected with field-level errors.
+- [x] Version mismatch is rejected.
+- [x] `Not applicable` excluded from scoring; insufficient-data thresholds enforced.
+- [x] SMI is `null` when any dimension is insufficient (DOMAIN-DECISIONS DD-1).
+- [x] Age metaphor present only when `includeAgeMetaphor` is true.
+- [x] `assessmentId` is opaque and stateless; no raw answers logged (PRD §10.3, §20).
+- [x] Contract tests cover recomputation and rejection paths.
 
 ## References
 

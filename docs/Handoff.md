@@ -14,48 +14,42 @@ _Last updated: 2026-06-21_
 
 ## Where things stand
 
-**Phase 0 (deterministic scoring core) is complete and verified. I001 is done.**
+**Phase 0 and Phase A are complete. 73 tests pass.**
 
-Phase 0: The pure domain layer (`src/domain/`) implements the full RMP-1.0 questionnaire
-bank, deterministic scoring, confidence, and narrative scoring.
-
-I001: `GET /api/v1/questionnaire` route is live at
-`src/app/api/v1/questionnaire/route.ts`. It uses `getPublicQuestionnaire()` from the
-domain, adds `scoringVersion` and `estimatedMinutes`, validates through a Zod schema, and
-returns a `Cache-Control: public, max-age=86400` response. 7 contract tests pass (56 total).
+- Phase 0: pure domain layer — canonical bank, scoring, confidence, narrative scoring.
+- I001: `GET /api/v1/questionnaire` (score-free, Zod-validated, cached).
+- I002: `POST /api/v1/assessments/score` — server-side recompute, opaque `assessmentId`,
+  typed error responses, 17 contract tests.
 
 What exists today:
-- `src/domain/` — canonical bank (24 structured items + 2 narrative exercises, server-owned
-  scores), `scoreStructuredAssessment`, `calculateConfidence`, `calculateNarrativeScore`,
-  `calculateAgeMetaphor`, typed `validateAnswerSet`, `getPublicQuestionnaire` (score-free).
-- `src/app/api/v1/questionnaire/route.ts` — `GET /api/v1/questionnaire` (score-free,
-  Zod-validated, cached). `buildQuestionnairePayload()` exported for tests.
-- `src/app/` — placeholder landing only (title + disclaimer). No questionnaire UI yet.
-- Docs: `docs/DOMAIN-DECISIONS.md` (DD-1..DD-4), `PROGRESS.md` (status), `docs/issues/`
-  (I001–I018), `AGENTS.md` (canonical guide), `KNOWLEDGE.md` (quirks).
+- `src/domain/` — canonical bank (24 structured + 2 narrative), `scoreStructuredAssessment`,
+  `calculateConfidence`, `calculateNarrativeScore`, `calculateAgeMetaphor`,
+  `validateAnswerSet`, `getPublicQuestionnaire`.
+- `src/app/api/v1/questionnaire/route.ts` — `GET /api/v1/questionnaire`.
+- `src/app/api/v1/assessments/score/route.ts` — `POST /api/v1/assessments/score`.
+  Exports `processScoreRequest` (tested directly) and `ScoreResponseSchema`.
+- `src/app/` — placeholder landing only (no questionnaire UI yet).
+- Docs: `docs/DOMAIN-DECISIONS.md` (DD-1..DD-5), `PROGRESS.md`, `docs/issues/` (I001–I018),
+  `AGENTS.md`, `KNOWLEDGE.md`.
 
-What does **not** exist yet: any `/api/v1` route, the client questionnaire flow, the AI
-layer, safety service, observability, E2E/a11y tests. All of it is decomposed in
-`docs/issues/`.
+What does **not** exist yet: the client questionnaire flow, the AI layer, safety service,
+observability, E2E/a11y tests. All decomposed in `docs/issues/`.
 
 ## Git / environment
 
-- Repo: `jimzord12/phycological-age-test`. Working branch:
-  `claude/implementation-clarification-ctig2d`, branched off `main`.
-- The sibling `nextjs-ai-template` repo is mounted in context but is **not** this project;
-  its `CLAUDE.md` is unrelated. Do all work here. Don't open a PR unless asked.
+- Repo: `jimzord12/phycological-age-test`. Working branch: `claude/ai-library-selection-5cepke`.
 - `pnpm install` → `pnpm test` / `pnpm typecheck` / `pnpm build`. Node ≥ 22.
 
 ## Recommended next steps
 
-1. **I002** (score endpoint) — `POST /api/v1/assessments/score` recomputes scores
-   server-side from submitted answers and returns an opaque `assessmentId` plus the full
-   `ScoreResult`. Depends on Phase 0 domain. Directly unblocks I008 (results screen).
-2. Then the Phase B client flow (I003 → I008), which is where the app becomes usable.
-3. The AI layer (I010 → I012 → I011) only **after** deterministic scoring + graceful
-   fallback are solid (PRD §25). It is provider-agnostic; the intended provider (Z.AI GLM
-   Coding Plan) speaks the **Anthropic Messages** protocol, so the Anthropic-style adapter
-   covers it via a configurable base URL.
+1. **Phase B client flow** — I003 (client state + session persistence) → I004 (landing +
+   consent) → I005 (questionnaire shell) → I006 (narrative UI) → I007 (review) → I008
+   (deterministic results screen). This is where the app becomes usable end-to-end.
+2. The AI layer (I010 → I012 → I011) only **after** Phase B is solid (PRD §25). **Library
+   decision (DD-5):** use the **Vercel AI SDK** (`ai` + `@ai-sdk/anthropic` +
+   `@ai-sdk/openai`). Provider swap is env-only; Z.AI GLM reachable via configurable
+   `baseURL`. Structured output via `generateObject()` + Zod schema; only
+   `src/server/ai-provider.ts` imports from the SDK.
 
 ## Things to keep in mind (gotchas → see KNOWLEDGE.md for detail)
 
