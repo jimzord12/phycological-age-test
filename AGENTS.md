@@ -79,7 +79,8 @@ no network, no I/O) so results are deterministic and testable.
 - Add tests with every change; co-locate `*.test.ts` next to the code.
 - Preserve domain identifiers and version values exactly.
 - Land work as the vertical slices described in `docs/issues/`; update `PROGRESS.md` status.
-- Record newly-discovered quirks in `KNOWLEDGE.md` (see §6), then run the size script.
+- Record newly-discovered quirks in `KNOWLEDGE.md` with a detector test where practical,
+  then run the size script (full routine in §6).
 - Document any necessary deviation as a new `DD-*` in `docs/DOMAIN-DECISIONS.md`.
 
 **Don't**
@@ -105,11 +106,19 @@ like one developer built it.
   `docs/DOMAIN-DECISIONS.md`) — they are infrastructure/behavior surprises that would
   otherwise cost the next agent a debug loop. Keep each record short and to the point.
 
-**Required routine for KNOWLEDGE.md:** after inserting a record — and **only then** — run:
+**Required routine for KNOWLEDGE.md:**
 
-```bash
-pnpm knowledge:size      # or: bash scripts/check-knowledge-size.sh
-```
+1. Add the record (terse — see the format in `KNOWLEDGE.md`).
+2. **If practical, add a detector test** in `src/quirks.test.ts` (titled `K: ...`) that
+   fails when the quirk no longer holds, and reference it from the record's `Detector` line.
+   This gives a cheap signal when an upstream fix lands so the entry can be **retired** (when
+   a detector fails because the quirk is gone, delete the entry and its detector together).
+   If a quirk can't be cheaply tested, write `Detector: none — verify manually`.
+3. **Then, and only then**, run:
+
+   ```bash
+   pnpm knowledge:size      # or: bash scripts/check-knowledge-size.sh
+   ```
 
 If the file is above **150 KB**, add a note at the top of `docs/Handoff.md` instructing the
 next agent that their **first** action is to compress and distill `KNOWLEDGE.md` before
