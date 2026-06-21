@@ -65,11 +65,14 @@ Record format:
 - **Fix:** Keep both in sync when changing the alias. Currently both map `@/* -> ./src/*`.
 - **Detector:** `src/quirks.test.ts` → "K: the @/ path alias resolves under vitest".
 
-### Vitest environment is `node` (no DOM yet)
-- **Symptom:** Future React component tests fail with `document is not defined`.
-- **Cause:** `vitest.config.ts` sets `environment: "node"`; jsdom is not installed.
-- **Fix:** When adding component tests, install `jsdom` and set the environment per-file
-  (`// @vitest-environment jsdom`) or split config. Domain tests stay on `node`.
+### Vitest global environment is `node`; DOM tests require a per-file directive
+- **Symptom:** A test file that touches DOM APIs (`document`, `window`, `sessionStorage`)
+  fails with `document is not defined` unless it opts in to jsdom.
+- **Cause:** `vitest.config.ts` sets `environment: "node"` globally (intentional — keeps
+  domain tests fast). `jsdom` is installed (added I003) but not the default.
+- **Fix:** Add `// @vitest-environment jsdom` as the first line of any test file that needs
+  a DOM. See `src/client/storage.test.ts` for an established example. Domain tests stay on
+  `node` — do not change the global config.
 - **Detector:** `src/quirks.test.ts` → "K: vitest runs in a DOM-less (node) environment"
   (flips when a global DOM env is introduced — update this entry then).
 
