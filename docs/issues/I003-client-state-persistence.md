@@ -1,6 +1,6 @@
 # I003 — Client assessment state + session persistence
 
-- **Status:** ⬜ not started
+- **Status:** ✅ done
 - **Phase:** B (client flow)
 - **Depends on:** I001
 - **Complexity:** 3
@@ -25,10 +25,10 @@ within the same browser session, and never persist raw narrative text to `localS
 
 ## Acceptance criteria
 
-- [ ] Refresh mid-assessment restores the active draft from `sessionStorage`.
-- [ ] No raw narrative text or API keys are written to `localStorage`.
-- [ ] Version mismatch blocks scoring and surfaces discard/export options.
-- [ ] Writes are debounced; navigation requires no network after initial load.
+- [x] Refresh mid-assessment restores the active draft from `sessionStorage`.
+- [x] No raw narrative text or API keys are written to `localStorage`.
+- [x] Version mismatch blocks scoring and surfaces discard/export options.
+- [x] Writes are debounced; navigation requires no network after initial load.
 
 ## References
 

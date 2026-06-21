@@ -15,7 +15,7 @@ Last updated: 2026-06-21
 | ----- | ----- | ------ |
 | 0 | Domain core: types, canonical bank, deterministic scoring + tests | ✅ done |
 | A | API foundation: questionnaire + score endpoints | ✅ done |
-| B | Client flow: consent → questionnaire → review → deterministic results | ⬜ |
+| B | Client flow: consent → questionnaire → review → deterministic results | 🟡 in progress |
 | C | AI layer: provider abstraction, analyze endpoint, safety service | ⬜ |
 | D | Cross-cutting: observability, rate limiting, security hardening | ⬜ |
 | E | QA: E2E journeys, accessibility suite, AI evaluation set | ⬜ |
@@ -47,7 +47,7 @@ Last updated: 2026-06-21
 | ----- | ----- | ----- | ---------- | ---------- |
 | [I001](docs/issues/I001-questionnaire-api.md) | `GET /api/v1/questionnaire` (score-free) | A | Phase 0 | ✅ |
 | [I002](docs/issues/I002-score-api.md) | `POST /api/v1/assessments/score` + validation | A | Phase 0 | ✅ |
-| [I003](docs/issues/I003-client-state-persistence.md) | Client assessment state + session persistence | B | I001 | 3 |
+| [I003](docs/issues/I003-client-state-persistence.md) | Client assessment state + session persistence | B | I001 | ✅ |
 | [I004](docs/issues/I004-landing-consent.md) | Landing + consent + eligibility/AI/age-metaphor choices | B | I003 | 3 |
 | [I005](docs/issues/I005-questionnaire-shell.md) | Questionnaire shell + structured item UI (a11y) | B | I003 | 4 |
 | [I006](docs/issues/I006-narrative-ui.md) | Narrative exercise UI (optional, word caps) | B | I005 | 2 |
