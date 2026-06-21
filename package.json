@@ -10,7 +10,8 @@
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
     "test:watch": "vitest",
-    "test:coverage": "vitest run --coverage"
+    "test:coverage": "vitest run --coverage",
+    "knowledge:size": "bash scripts/check-knowledge-size.sh"
   },
   "dependencies": {
     "next": "16.2.6",
