@@ -14,15 +14,22 @@ _Last updated: 2026-06-21_
 
 ## Where things stand
 
-**Phase 0 (deterministic scoring core) is complete and verified.** The repo is a fresh
-Next.js 16 + React 19 + TypeScript app. The pure domain layer (`src/domain/`) implements the
-full RMP-1.0 questionnaire bank, deterministic scoring, confidence, and narrative scoring,
-with **45 passing unit tests**. Typecheck and production build are green.
+**Phase 0 (deterministic scoring core) is complete and verified. I001 is done.**
+
+Phase 0: The pure domain layer (`src/domain/`) implements the full RMP-1.0 questionnaire
+bank, deterministic scoring, confidence, and narrative scoring.
+
+I001: `GET /api/v1/questionnaire` route is live at
+`src/app/api/v1/questionnaire/route.ts`. It uses `getPublicQuestionnaire()` from the
+domain, adds `scoringVersion` and `estimatedMinutes`, validates through a Zod schema, and
+returns a `Cache-Control: public, max-age=86400` response. 7 contract tests pass (56 total).
 
 What exists today:
 - `src/domain/` — canonical bank (24 structured items + 2 narrative exercises, server-owned
   scores), `scoreStructuredAssessment`, `calculateConfidence`, `calculateNarrativeScore`,
   `calculateAgeMetaphor`, typed `validateAnswerSet`, `getPublicQuestionnaire` (score-free).
+- `src/app/api/v1/questionnaire/route.ts` — `GET /api/v1/questionnaire` (score-free,
+  Zod-validated, cached). `buildQuestionnairePayload()` exported for tests.
 - `src/app/` — placeholder landing only (title + disclaimer). No questionnaire UI yet.
 - Docs: `docs/DOMAIN-DECISIONS.md` (DD-1..DD-4), `PROGRESS.md` (status), `docs/issues/`
   (I001–I018), `AGENTS.md` (canonical guide), `KNOWLEDGE.md` (quirks).
@@ -41,9 +48,9 @@ layer, safety service, observability, E2E/a11y tests. All of it is decomposed in
 
 ## Recommended next steps
 
-1. **I001 + I002** (API foundation) — these unblock the entire client flow and sit directly
-   on the verified domain core. `GET /api/v1/questionnaire` (must stay score-free) and
-   `POST /api/v1/assessments/score` (recompute server-side; return opaque `assessmentId`).
+1. **I002** (score endpoint) — `POST /api/v1/assessments/score` recomputes scores
+   server-side from submitted answers and returns an opaque `assessmentId` plus the full
+   `ScoreResult`. Depends on Phase 0 domain. Directly unblocks I008 (results screen).
 2. Then the Phase B client flow (I003 → I008), which is where the app becomes usable.
 3. The AI layer (I010 → I012 → I011) only **after** deterministic scoring + graceful
    fallback are solid (PRD §25). It is provider-agnostic; the intended provider (Z.AI GLM
