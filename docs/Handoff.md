@@ -53,9 +53,12 @@ layer, safety service, observability, E2E/a11y tests. All of it is decomposed in
    `ScoreResult`. Depends on Phase 0 domain. Directly unblocks I008 (results screen).
 2. Then the Phase B client flow (I003 → I008), which is where the app becomes usable.
 3. The AI layer (I010 → I012 → I011) only **after** deterministic scoring + graceful
-   fallback are solid (PRD §25). It is provider-agnostic; the intended provider (Z.AI GLM
-   Coding Plan) speaks the **Anthropic Messages** protocol, so the Anthropic-style adapter
-   covers it via a configurable base URL.
+   fallback are solid (PRD §25). **Library decision (DD-5):** use the **Vercel AI SDK**
+   (`ai` + `@ai-sdk/anthropic` + `@ai-sdk/openai`). Provider swap is env-only; Z.AI GLM
+   is reachable via `createAnthropic({ baseURL: 'https://api.z.ai/api/anthropic' })` or
+   `createOpenAI({ baseURL: 'https://api.z.ai/api/coding/paas/v4' })`. Structured output
+   via `generateObject()` + Zod schema; `src/server/ai-provider.ts` is the only file that
+   imports from the SDK.
 
 ## Things to keep in mind (gotchas → see KNOWLEDGE.md for detail)
 
