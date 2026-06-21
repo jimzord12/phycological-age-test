@@ -82,6 +82,10 @@ no network, no I/O) so results are deterministic and testable.
 - Record newly-discovered quirks in `KNOWLEDGE.md` with a detector test where practical,
   then run the size script (full routine in §6).
 - Document any necessary deviation as a new `DD-*` in `docs/DOMAIN-DECISIONS.md`.
+- **Prefer one branch per issue** — when starting a new issue, recommend creating a
+  dedicated branch (e.g. `feat/I003-client-state`) rather than piling work onto the current
+  branch. This keeps diffs reviewable and makes it easy to isolate or revert a single
+  issue. Not a hard rule — use judgment when issues are trivially small or tightly coupled.
 
 **Don't**
 - Don't change question wording, answer order, score maps, formulas, rubric rules, or the
