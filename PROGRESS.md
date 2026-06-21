@@ -67,6 +67,45 @@ Last updated: 2026-06-21
 Complexity is 1–5 (per the project's complexity-rating convention). No item is rated 5;
 if one grows during implementation, decompose it before starting.
 
+## Token-cost estimates
+
+Rough per-issue token consumption for an AI agent session. Based on I001 actual (~20K)
+as the calibration point. Treat as order-of-magnitude guidance, not a guarantee — edge
+cases and iteration rounds can push any issue up a tier.
+
+**Tier legend:**
+
+| Tier | Approx. tokens | Typical drivers |
+| ---- | -------------- | --------------- |
+| XS | 10–30K | Docs or a single small file |
+| S | 30–70K | One API route or a simple UI screen |
+| M | 70–130K | Multiple files, non-trivial logic, solid test coverage |
+| L | 130–220K | Complex UI with accessibility, many states/paths |
+| XL | 220K+ | Many interdependent pieces; iteration rounds likely |
+
+| Issue | Title | Tier | Key reason |
+| ----- | ----- | ---- | ---------- |
+| I001 ✅ | `GET /api/v1/questionnaire` | **XS** | Done — ~20K actual |
+| I002 | `POST /api/v1/assessments/score` | **S** | One route, Zod validation, domain wiring, error types |
+| I003 | Client state + session persistence | **M** | React context/store, debounce, version-mismatch logic |
+| I004 | Landing + consent UI | **S** | Two screens, form validation, state integration |
+| I005 | Questionnaire shell + a11y | **L** | 26-step flow, keyboard nav, focus management, radio groups |
+| I006 | Narrative exercise UI | **S** | Word counting, caps, skip logic |
+| I007 | Review screen | **S** | Display-only, completion counts, jump-to-item |
+| I008 | Deterministic results screen | **L** | Many null/insufficient states, charts + text equivalents, a11y |
+| I009 | Export + start over | **S** | HTML/JSON serialisation, confirmation dialog |
+| I010 | AI provider abstraction | **M** | Interface + 2 adapters, env config, mocking |
+| I011 | `POST /api/v1/assessments/analyze` | **XL** | Prompt assembly, strict schema, safety integration, 4 result states |
+| I012 | Safety service | **M** | Two-layer classification, help-resource selection |
+| I013 | Observability + rate limiting | **S** | Structured events, scrubber, rate-limit middleware |
+| I014 | Security hardening | **M** | CSP headers, escaping audit, CI scanning |
+| I015 | E2E test journeys (Playwright) | **XL** | 13 journeys, Playwright setup, mocked AI layer |
+| I016 | Accessibility suite + audit | **M** | axe-core integration, manual check docs |
+| I017 | AI evaluation fixtures + harness | **M** | Synthetic fixtures, eval metrics, harness runner |
+| I018 | Delivery docs | **XS** | Prose only — privacy policy draft, threat model, deploy guide |
+
+---
+
 ## Definition of Done (PRD §27)
 
 A production build deploys with AI disabled or enabled; an anonymous adult completes the
