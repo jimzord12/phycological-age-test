@@ -1,6 +1,6 @@
 # I001 — `GET /api/v1/questionnaire` (score-free)
 
-- **Status:** ⬜ not started
+- **Status:** ✅ done
 - **Phase:** A (API foundation)
 - **Depends on:** Phase 0 (domain core)
 - **Complexity:** 2
@@ -24,12 +24,12 @@ exposes `getPublicQuestionnaire()` which strips scores.
 
 ## Acceptance criteria
 
-- [ ] Response includes all 24 structured items (canonical order) and both narrative
+- [x] Response includes all 24 structured items (canonical order) and both narrative
       exercises with field word caps.
-- [ ] Response contains the required non-clinical disclaimer (DOMAIN §2).
-- [ ] No numeric option score appears anywhere in the serialized response (contract test
+- [x] Response contains the required non-clinical disclaimer (DOMAIN §2).
+- [x] No numeric option score appears anywhere in the serialized response (contract test
       asserts the absence of a `"score"` field).
-- [ ] `questionnaireVersion === "RMP-1.0"`, `scoringVersion === "RMP-SCORE-1.0"`.
+- [x] `questionnaireVersion === "RMP-1.0"`, `scoringVersion === "RMP-SCORE-1.0"`.
 
 ## References
 
