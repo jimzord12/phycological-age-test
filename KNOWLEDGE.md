@@ -83,6 +83,17 @@ Record format:
   time later, run `pnpm approve-builds` and select `sharp`.
 - **Detector:** none — verify manually (it's a one-time `pnpm install` warning).
 
+### Zod v4 schemas must be wrapped with `zodSchema()` for AI SDK v6 `generateObject()`
+- **Symptom:** TypeScript or runtime errors when passing a Zod v4 schema directly to
+  `generateObject({ schema: myZodSchema })`.
+- **Cause:** `generateObject` expects `FlexibleSchema<T>`; Zod v4 schemas satisfy the
+  Standard Schema v1 interface (`~standard`) at runtime, but the AI SDK's TypeScript
+  overloads may not align with Zod v4 types without the wrapper.
+- **Fix:** Use `zodSchema(mySchema)` from `"ai"` before passing to `generateObject`.
+  The wrapper converts to `{ _type, jsonSchema, validate }` — all AI SDK internals use
+  it correctly. Validate function is async (returns Promise) in this setup; that's expected.
+- **Detector:** `src/server/ai-provider.test.ts` — any schema test failure would surface this.
+
 ### `next-env.d.ts` is generated and gitignored
 - **Symptom:** Full-app `tsc` may complain about missing Next types on a clean checkout.
 - **Cause:** Next generates `next-env.d.ts` on `dev`/`build`; it is gitignored.

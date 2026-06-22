@@ -8,13 +8,13 @@ Update this file at the end of your session (replace stale "what's next" with re
 > the **top** of this file. If you see one, your first action is to compress/distill
 > KNOWLEDGE.md before anything else.
 
-_Last updated: 2026-06-22_
+_Last updated: 2026-06-22 (I010 landed)_
 
 ---
 
 ## Where things stand
 
-**Phase 0, Phase A, and Phase B (I001–I009) are complete. 200 tests pass.**
+**Phase 0, Phase A, Phase B (I001–I009), and I010 are complete. 224 tests pass.**
 
 - Phase 0: pure domain layer — canonical bank, scoring, confidence, narrative scoring.
 - I001: `GET /api/v1/questionnaire` (score-free, Zod-validated, cached).
@@ -104,7 +104,23 @@ What exists today:
   `_export-helpers.test.ts`. Results screen now has "Export JSON", "Export HTML", and
   "Start a new assessment" buttons in the actions area.
 
-What does **not** exist yet: AI layer, safety service, observability, E2E/a11y tests.
+- **`src/server/ai-provider.ts`** (I010): provider-agnostic `analyze()` wrapper:
+  - Uses Vercel AI SDK v6 (`ai@6`, `@ai-sdk/anthropic`, `@ai-sdk/openai`).
+  - `AI_PROVIDER=none` → `{ status: "disabled" }` (default; deterministic flow unblocked).
+  - `AI_PROVIDER=anthropic` → `createAnthropic({ baseURL, apiKey })` from env.
+  - `AI_PROVIDER=openai` → `createOpenAI({ baseURL, apiKey })` from env.
+  - `generateObject()` with `zodSchema(AnalysisOutputSchema)` — no raw JSON parsing.
+  - Error classification: `rate_limited` (429), `invalid_output` (schema failure),
+    `timeout` (AbortError/TimeoutError), `provider_error` (everything else).
+  - `maxRetries: 1`, `abortSignal: AbortSignal.timeout(AI_ANALYSIS_TIMEOUT_MS)`.
+  - `AnalysisOutputSchema` exported: 3–5 observations, 2–3 experiments, rubric 0–2,
+    penalty 0–2, reviewPeriodDays 7–45.
+  - 24 unit tests in `src/server/ai-provider.test.ts`.
+  - **Zod v4 + AI SDK v6 note:** Zod v4 implements Standard Schema v1 (`~standard`),
+    which AI SDK v6 supports. Use `zodSchema()` from `"ai"` to wrap schemas before
+    passing to `generateObject()`.
+
+What does **not** exist yet: safety service (I012), analyze endpoint (I011), observability, E2E/a11y tests.
 
 ## Git / environment
 
@@ -114,9 +130,11 @@ What does **not** exist yet: AI layer, safety service, observability, E2E/a11y t
 
 ## Recommended next steps
 
-1. **I019** (CI pipeline) — no dependencies. Single `.github/workflows/ci.yml` file:
-   install → typecheck → test → build, triggered on push and PR. Good quick win.
-2. The AI layer (I010 → I012 → I011) — Phase B is now complete (PRD §25).
+1. **I012** (safety service) — no dependencies within Phase C. Two-layer classification,
+   help-resource selection. I011 depends on it, so this unblocks the full AI layer.
+2. **I011** (`POST /api/v1/assessments/analyze`) — depends on I010 ✅ + I012. The most
+   complex remaining item (XL tier). Prompt assembly, strict schema validation, safety
+   integration, 4 result states.
 
 ## Things to keep in mind (gotchas → see KNOWLEDGE.md for detail)
 
