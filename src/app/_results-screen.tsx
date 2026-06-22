@@ -4,6 +4,13 @@ import { useEffect, useRef, useState } from "react";
 import { useAssessment } from "@/client/assessment-context";
 import type { ScoreResponse } from "@/app/api/v1/assessments/score/route";
 import {
+  buildExportPayload,
+  buildJsonExport,
+  buildHtmlExport,
+  triggerDownload,
+  exportDateStamp,
+} from "./_export-helpers";
+import {
   DIMENSION_IDS,
   type DimensionId,
   type DimensionResult,
@@ -278,6 +285,26 @@ export function ResultsScreen() {
     if (window.confirm("Start a new assessment? Your current answers will be cleared.")) {
       dispatch({ type: "DISCARD", newVersion: state.questionnaireVersion });
     }
+  }
+
+  function handleExportJson() {
+    if (scoreState.status !== "success") return;
+    const payload = buildExportPayload(
+      scoreState.data.result,
+      state.preferences.includeAgeMetaphor,
+    );
+    const date = exportDateStamp(payload.exportedAt);
+    triggerDownload(buildJsonExport(payload), `maturity-profile-${date}.json`, "application/json");
+  }
+
+  function handleExportHtml() {
+    if (scoreState.status !== "success") return;
+    const payload = buildExportPayload(
+      scoreState.data.result,
+      state.preferences.includeAgeMetaphor,
+    );
+    const date = exportDateStamp(payload.exportedAt);
+    triggerDownload(buildHtmlExport(payload), `maturity-profile-${date}.html`, "text/html");
   }
 
   if (scoreState.status === "loading") {
@@ -607,6 +634,36 @@ export function ResultsScreen() {
         }}
       >
         <button
+          onClick={handleExportJson}
+          style={{
+            background: "none",
+            border: "1px solid var(--border)",
+            borderRadius: 8,
+            padding: "12px 24px",
+            color: "var(--text-secondary)",
+            fontSize: "0.9375rem",
+            cursor: "pointer",
+            minHeight: 44,
+          }}
+        >
+          Export JSON
+        </button>
+        <button
+          onClick={handleExportHtml}
+          style={{
+            background: "none",
+            border: "1px solid var(--border)",
+            borderRadius: 8,
+            padding: "12px 24px",
+            color: "var(--text-secondary)",
+            fontSize: "0.9375rem",
+            cursor: "pointer",
+            minHeight: 44,
+          }}
+        >
+          Export HTML
+        </button>
+        <button
           onClick={handleStartOver}
           style={{
             background: "none",
@@ -621,7 +678,6 @@ export function ResultsScreen() {
         >
           Start a new assessment
         </button>
-        {/* Export button slot for I009 */}
       </div>
     </main>
   );
