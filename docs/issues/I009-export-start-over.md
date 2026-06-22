@@ -1,6 +1,6 @@
 # I009 — Export (HTML/JSON) + start over
 
-- **Status:** ⬜ not started
+- **Status:** ✅ done
 - **Phase:** B (client flow)
 - **Depends on:** I008
 - **Complexity:** 2
@@ -23,10 +23,10 @@ Users can keep a local copy of results and fully reset without leaving server-si
 
 ## Acceptance criteria
 
-- [ ] HTML and JSON exports include version identifiers and the disclaimer.
-- [ ] Exports escape user/model text; no third-party data egress for PDF.
-- [ ] Start over shows confirmation and clears draft + result data.
-- [ ] Print output excludes decorative background.
+- [x] HTML and JSON exports include version identifiers and the disclaimer.
+- [x] Exports escape user/model text; no third-party data egress for PDF.
+- [x] Start over shows confirmation and clears draft + result data.
+- [x] Print output excludes decorative background.
 
 ## References
 

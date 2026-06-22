@@ -14,7 +14,7 @@ _Last updated: 2026-06-22_
 
 ## Where things stand
 
-**Phase 0, Phase A, I003, I004, I005, I006, I007, and I008 (Phase B) are complete. 169 tests pass.**
+**Phase 0, Phase A, and Phase B (I001–I009) are complete. 200 tests pass.**
 
 - Phase 0: pure domain layer — canonical bank, scoring, confidence, narrative scoring.
 - I001: `GET /api/v1/questionnaire` (score-free, Zod-validated, cached).
@@ -97,22 +97,26 @@ What exists today:
 - Docs: `docs/DOMAIN-DECISIONS.md` (DD-1..DD-6), `PROGRESS.md`, `docs/issues/` (I001–I019),
   `AGENTS.md`, `KNOWLEDGE.md`.
 
-What does **not** exist yet: export/start-over actions (I009),
-AI layer, safety service, observability, E2E/a11y tests.
+- **`_export-helpers.ts`** (I009): `escapeHtml`, `buildExportPayload`, `buildJsonExport`,
+  `buildHtmlExport`, `triggerDownload`, `exportDateStamp`. Self-contained HTML export with
+  inline CSS and `@media print` rule that suppresses dark background. JSON export includes
+  version identifiers, disclaimer, and human-readable confidence reasons. 31 unit tests in
+  `_export-helpers.test.ts`. Results screen now has "Export JSON", "Export HTML", and
+  "Start a new assessment" buttons in the actions area.
+
+What does **not** exist yet: AI layer, safety service, observability, E2E/a11y tests.
 
 ## Git / environment
 
-- Repo: `jimzord12/phycological-age-test`. Working branch: `claude/gifted-ritchie-ra5pa3`.
+- Repo: `jimzord12/phycological-age-test`. Working branch: `claude/bold-babbage-fsfl6p`.
 - `pnpm install` → `pnpm test` / `pnpm typecheck` / `pnpm build`. Node ≥ 22.
 - `jsdom` is a devDependency (I003). Use `// @vitest-environment jsdom` for DOM test files.
 
 ## Recommended next steps
 
-1. **I009** — Export (HTML/JSON) + start over. Adds the export button to the results screen and a "Start over" confirmation. Simple issue, no major dependencies.
-2. **I019** (CI pipeline) — can be done at any time; no dependencies. Single
-   `.github/workflows/ci.yml` file: install → typecheck → test → build, triggered on push
-   and PR. Good quick win between heavier Phase B issues.
-4. The AI layer (I010 → I012 → I011) only after Phase B is solid (PRD §25).
+1. **I019** (CI pipeline) — no dependencies. Single `.github/workflows/ci.yml` file:
+   install → typecheck → test → build, triggered on push and PR. Good quick win.
+2. The AI layer (I010 → I012 → I011) — Phase B is now complete (PRD §25).
 
 ## Things to keep in mind (gotchas → see KNOWLEDGE.md for detail)
 

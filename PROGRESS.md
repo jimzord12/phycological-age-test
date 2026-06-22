@@ -15,7 +15,7 @@ Last updated: 2026-06-22
 | ----- | ----- | ------ |
 | 0 | Domain core: types, canonical bank, deterministic scoring + tests | ✅ done |
 | A | API foundation: questionnaire + score endpoints | ✅ done |
-| B | Client flow: consent → questionnaire → review → deterministic results | 🟡 in progress (I009 remains) |
+| B | Client flow: consent → questionnaire → review → deterministic results | ✅ done |
 | C | AI layer: provider abstraction, analyze endpoint, safety service | ⬜ |
 | D | Cross-cutting: observability, rate limiting, security hardening, CI | ⬜ |
 | E | QA: E2E journeys, accessibility suite, AI evaluation set | ⬜ |
@@ -53,7 +53,7 @@ Last updated: 2026-06-22
 | [I006](docs/issues/I006-narrative-ui.md) | Narrative exercise UI (optional, word caps) | B | I005 | ✅ |
 | [I007](docs/issues/I007-review-screen.md) | Review screen | B | I005, I006 | ✅ |
 | [I008](docs/issues/I008-deterministic-results.md) | Deterministic results screen (text equivalents) | B | I002, I003 | ✅ |
-| [I009](docs/issues/I009-export-start-over.md) | Export (HTML/JSON) + start over | B | I008 | 2 |
+| [I009](docs/issues/I009-export-start-over.md) | Export (HTML/JSON) + start over | B | I008 | ✅ |
 | [I010](docs/issues/I010-ai-provider-abstraction.md) | Provider-agnostic AI abstraction + adapters | C | Phase 0 | 3 |
 | [I011](docs/issues/I011-analyze-api.md) | `POST /api/v1/assessments/analyze` + strict schema | C | I002, I010, I012 | 4 |
 | [I012](docs/issues/I012-safety-service.md) | Safety service + help-resource selection | C | Phase 0 | 3 |
