@@ -1,6 +1,6 @@
 # I012 — Safety service + help-resource selection
 
-- **Status:** ⬜ not started
+- **Status:** ✅ done
 - **Phase:** C (AI layer)
 - **Depends on:** Phase 0
 - **Complexity:** 3
@@ -30,11 +30,11 @@ authoring beyond a safe default set.
 
 ## Acceptance criteria
 
-- [ ] Mocked immediate-risk content yields `interrupt` and suppresses normal analysis.
-- [ ] Safety classification does not rely solely on the maturity model.
-- [ ] Help-resource selection is decoupled from the analysis prompt and not inferred from
+- [x] Mocked immediate-risk content yields `interrupt` and suppresses normal analysis.
+- [x] Safety classification does not rely solely on the maturity model.
+- [x] Help-resource selection is decoupled from the analysis prompt and not inferred from
       narrative-derived location.
-- [ ] Structured results remain viewable during a safety interruption.
+- [x] Structured results remain viewable during a safety interruption.
 
 ## References
 
