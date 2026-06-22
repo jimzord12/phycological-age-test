@@ -5,7 +5,7 @@ maps remaining work to the self-contained issues in [`docs/issues/`](docs/issues
 
 **Legend:** ✅ done · 🟡 in progress · ⬜ not started
 
-Last updated: 2026-06-22 (I010 ✅)
+Last updated: 2026-06-22 (I012 ✅)
 
 ---
 
@@ -56,7 +56,7 @@ Last updated: 2026-06-22 (I010 ✅)
 | [I009](docs/issues/I009-export-start-over.md) | Export (HTML/JSON) + start over | B | I008 | ✅ |
 | [I010](docs/issues/I010-ai-provider-abstraction.md) | Provider-agnostic AI abstraction + adapters | C | Phase 0 | ✅ |
 | [I011](docs/issues/I011-analyze-api.md) | `POST /api/v1/assessments/analyze` + strict schema | C | I002, I010, I012 | 4 |
-| [I012](docs/issues/I012-safety-service.md) | Safety service + help-resource selection | C | Phase 0 | 3 |
+| [I012](docs/issues/I012-safety-service.md) | Safety service + help-resource selection | C | Phase 0 | ✅ |
 | [I013](docs/issues/I013-observability-rate-limit.md) | Privacy-safe observability + rate limiting | D | I002 | 2 |
 | [I014](docs/issues/I014-security-hardening.md) | Security hardening (CSP, escaping, limits) | D | I002, I008 | 3 |
 | [I015](docs/issues/I015-e2e-tests.md) | E2E test journeys (Playwright) | E | I008, I009, I011 | 4 |

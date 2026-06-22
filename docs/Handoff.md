@@ -8,13 +8,13 @@ Update this file at the end of your session (replace stale "what's next" with re
 > the **top** of this file. If you see one, your first action is to compress/distill
 > KNOWLEDGE.md before anything else.
 
-_Last updated: 2026-06-22 (I010 landed)_
+_Last updated: 2026-06-22 (I012 landed)_
 
 ---
 
 ## Where things stand
 
-**Phase 0, Phase A, Phase B (I001–I009), and I010 are complete. 224 tests pass.**
+**Phase 0, Phase A, Phase B (I001–I009), I010, and I012 are complete. 301 tests pass.**
 
 - Phase 0: pure domain layer — canonical bank, scoring, confidence, narrative scoring.
 - I001: `GET /api/v1/questionnaire` (score-free, Zod-validated, cached).
@@ -120,7 +120,16 @@ What exists today:
     which AI SDK v6 supports. Use `zodSchema()` from `"ai"` to wrap schemas before
     passing to `generateObject()`.
 
-What does **not** exist yet: safety service (I012), analyze endpoint (I011), observability, E2E/a11y tests.
+- **`src/server/safety-service.ts`** (I012): two-layer safety classifier:
+  - `classifyRules(text)` — synchronous rule layer (always runs); matches immediate self-harm,
+    harm-to-others, and emergency patterns; falls back to `review_fallback` for ambiguous risk.
+  - `classifySafety(text, providerClassifier?)` — async public entry; rule layer runs first;
+    `interrupt` is never downgraded by the provider layer; provider failures are non-fatal.
+  - `selectHelpResources()` — international safe defaults (IASP, Befrienders, Crisis Text Line);
+    country is never inferred from narrative text.
+  - 77 unit tests in `src/server/safety-service.test.ts`.
+
+What does **not** exist yet: analyze endpoint (I011), observability, E2E/a11y tests.
 
 ## Git / environment
 
@@ -130,11 +139,9 @@ What does **not** exist yet: safety service (I012), analyze endpoint (I011), obs
 
 ## Recommended next steps
 
-1. **I012** (safety service) — no dependencies within Phase C. Two-layer classification,
-   help-resource selection. I011 depends on it, so this unblocks the full AI layer.
-2. **I011** (`POST /api/v1/assessments/analyze`) — depends on I010 ✅ + I012. The most
-   complex remaining item (XL tier). Prompt assembly, strict schema validation, safety
-   integration, 4 result states.
+1. **I011** (`POST /api/v1/assessments/analyze`) — all dependencies done (I010 ✅, I012 ✅).
+   The most complex remaining item (XL tier). Prompt assembly, strict schema validation,
+   safety integration (inject `classifySafety` from I012), 4 result states.
 
 ## Things to keep in mind (gotchas → see KNOWLEDGE.md for detail)
 
