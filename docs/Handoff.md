@@ -14,7 +14,7 @@ _Last updated: 2026-06-22_
 
 ## Where things stand
 
-**Phase 0, Phase A, I003, I004, I005, and I006 (Phase B) are complete. 129 tests pass.**
+**Phase 0, Phase A, I003, I004, I005, I006, and I007 (Phase B) are complete. 147 tests pass.**
 
 - Phase 0: pure domain layer — canonical bank, scoring, confidence, narrative scoring.
 - I001: `GET /api/v1/questionnaire` (score-free, Zod-validated, cached).
@@ -24,6 +24,7 @@ _Last updated: 2026-06-22_
 - I004: Landing + consent screens — done.
 - I005: Questionnaire shell + structured item UI — done.
 - I006: Narrative exercise UI — done.
+- I007: Review screen — done.
 
 What exists today:
 - `src/domain/` — canonical bank (24 structured + 2 narrative), `scoreStructuredAssessment`,
@@ -73,25 +74,29 @@ What exists today:
       questionnaire/13; N02 Continue → review/0.
     - Pure helpers `narrativeBack`, `narrativeContinue`, `NARRATIVE_VISUAL_STEPS` exported
       and covered by 10 unit tests in `_narrative-shell.test.ts`.
-  - `_home-flow.tsx` updated to route `phase === "narrative"` to `<NarrativeShell />`.
+  - `_home-flow.tsx` updated to route `phase === "narrative"` to `<NarrativeShell />` and `phase === "review"` to `<ReviewScreen />`.
+  - **`_review-screen.tsx`** (I007): review screen before submission:
+    - Per-dimension completion counts (answered / N/A / unanswered) with amber border when any unanswered.
+    - All 24 structured questions listed (grouped by dimension) with status tags and "Edit" buttons that jump directly to that question.
+    - Both narrative exercises shown with Complete / Partial / Skipped status and "Edit" buttons.
+    - Choices summary (AI analysis, age metaphor) shown read-only.
+    - Back → narrative/1 (N02); Submit → `phase: "submitted"` (score API call is I008's job).
+    - Pure helpers `getNarrativeStatus`, `getQuestionStatus`, `getDimensionSummary` exported and covered by 18 unit tests in `_review-screen.test.ts`.
 - Docs: `docs/DOMAIN-DECISIONS.md` (DD-1..DD-5), `PROGRESS.md`, `docs/issues/` (I001–I019),
   `AGENTS.md`, `KNOWLEDGE.md`.
 
-What does **not** exist yet: review/results UI (I007–I009),
+What does **not** exist yet: results UI (I008–I009),
 AI layer, safety service, observability, E2E/a11y tests.
 
 ## Git / environment
 
-- Repo: `jimzord12/phycological-age-test`. Working branch: `claude/next-open-task-hwuro4`.
+- Repo: `jimzord12/phycological-age-test`. Working branch: `claude/gifted-ritchie-ra5pa3`.
 - `pnpm install` → `pnpm test` / `pnpm typecheck` / `pnpm build`. Node ≥ 22.
 - `jsdom` is a devDependency (I003). Use `// @vitest-environment jsdom` for DOM test files.
 
 ## Recommended next steps
 
-1. **I007** — Review screen. Shows a summary of all structured answers (dimension groups)
-   and narrative drafts; lets the user jump back to edit any item; "Submit" transitions to
-   `phase: "submitted"` and triggers the score API call.
-2. **I008** — Deterministic results screen. Calls `POST /api/v1/assessments/score` and
+1. **I008** — Deterministic results screen. Calls `POST /api/v1/assessments/score` and
    renders the full profile: dimension scores, SMI, confidence, age metaphor (if opted in),
    and all required text equivalents for charts.
 3. **I019** (CI pipeline) — can be done at any time; no dependencies. Single
