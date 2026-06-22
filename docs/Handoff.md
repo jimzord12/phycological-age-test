@@ -44,7 +44,7 @@ What exists today:
     Continue (disabled until both required checks pass).
   - `_version-mismatch-banner.tsx` — export/discard UI for stale drafts.
   - `page.tsx` — renders `<HomeFlow />`.
-- Docs: `docs/DOMAIN-DECISIONS.md` (DD-1..DD-5), `PROGRESS.md`, `docs/issues/` (I001–I018),
+- Docs: `docs/DOMAIN-DECISIONS.md` (DD-1..DD-5), `PROGRESS.md`, `docs/issues/` (I001–I019),
   `AGENTS.md`, `KNOWLEDGE.md`.
 
 What does **not** exist yet: questionnaire/narrative/review/results UI (I005–I009),
@@ -65,7 +65,10 @@ AI layer, safety service, observability, E2E/a11y tests.
    - 26 steps (24 structured questions + intro + maybe progress bar). Focus on keyboard nav
      and radio group accessibility.
 2. I006 (narrative UI) → I007 (review) → I008 (results) follow naturally after I005.
-3. The AI layer (I010 → I012 → I011) only after Phase B is solid (PRD §25).
+3. **I019** (CI pipeline) — can be done at any time; no dependencies. Single
+   `.github/workflows/ci.yml` file: install → typecheck → test → build, triggered on push
+   and PR. Good quick win between heavier Phase B issues.
+4. The AI layer (I010 → I012 → I011) only after Phase B is solid (PRD §25).
 
 ## Things to keep in mind (gotchas → see KNOWLEDGE.md for detail)
 

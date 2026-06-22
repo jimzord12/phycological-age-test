@@ -17,7 +17,7 @@ Last updated: 2026-06-22
 | A | API foundation: questionnaire + score endpoints | ✅ done |
 | B | Client flow: consent → questionnaire → review → deterministic results | 🟡 in progress |
 | C | AI layer: provider abstraction, analyze endpoint, safety service | ⬜ |
-| D | Cross-cutting: observability, rate limiting, security hardening | ⬜ |
+| D | Cross-cutting: observability, rate limiting, security hardening, CI | ⬜ |
 | E | QA: E2E journeys, accessibility suite, AI evaluation set | ⬜ |
 | F | Delivery: privacy policy draft, threat model, deployment docs | ⬜ |
 
@@ -63,6 +63,7 @@ Last updated: 2026-06-22
 | [I016](docs/issues/I016-accessibility-suite.md) | Accessibility test suite + audit | E | I008 | 3 |
 | [I017](docs/issues/I017-ai-eval-fixtures.md) | AI evaluation fixtures + harness | E | I011 | 3 |
 | [I018](docs/issues/I018-delivery-docs.md) | Privacy policy draft, threat model, deployment docs | F | — | 2 |
+| [I019](docs/issues/I019-ci-pipeline.md) | Minimal CI pipeline (GitHub Actions) | D | — | 1 |
 
 Complexity is 1–5 (per the project's complexity-rating convention). No item is rated 5;
 if one grows during implementation, decompose it before starting.
@@ -103,6 +104,7 @@ cases and iteration rounds can push any issue up a tier.
 | I016 | Accessibility suite + audit | **M** | axe-core integration, manual check docs |
 | I017 | AI evaluation fixtures + harness | **M** | Synthetic fixtures, eval metrics, harness runner |
 | I018 | Delivery docs | **XS** | Prose only — privacy policy draft, threat model, deploy guide |
+| I019 | CI pipeline | **XS** | Single YAML file; no new logic or test infrastructure |
 
 ---
 
