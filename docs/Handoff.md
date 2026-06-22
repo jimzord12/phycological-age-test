@@ -8,13 +8,13 @@ Update this file at the end of your session (replace stale "what's next" with re
 > the **top** of this file. If you see one, your first action is to compress/distill
 > KNOWLEDGE.md before anything else.
 
-_Last updated: 2026-06-22 (I012 landed)_
+_Last updated: 2026-06-22 (I011 landed)_
 
 ---
 
 ## Where things stand
 
-**Phase 0, Phase A, Phase B (I001–I009), I010, and I012 are complete. 301 tests pass.**
+**Phase 0, Phase A, Phase B (I001–I009), I010, I011, and I012 are complete (Phase C done). 364 tests pass.**
 
 - Phase 0: pure domain layer — canonical bank, scoring, confidence, narrative scoring.
 - I001: `GET /api/v1/questionnaire` (score-free, Zod-validated, cached).
@@ -129,7 +129,27 @@ What exists today:
     country is never inferred from narrative text.
   - 77 unit tests in `src/server/safety-service.test.ts`.
 
-What does **not** exist yet: analyze endpoint (I011), observability, E2E/a11y tests.
+- **`src/server/analyze-prompt.ts`** (I011): prompt builder for the analyze endpoint:
+  - `buildSystemPrompt()` — versioned RMP-AI-1.0 system prompt; rubric criteria; anti-injection instructions (treats narrative blocks as untrusted data).
+  - `buildUserPrompt()` — dimension scores + structured option labels (no scores exposed) + narrative content in `[USER NARRATIVE]...[END USER NARRATIVE]` delimiters.
+  - `sanitizeForPrompt()` — strips literal delimiter escapes from user text (defense-in-depth).
+  - 26 unit tests in `src/server/analyze-prompt.test.ts`.
+
+- **`src/app/api/v1/assessments/analyze/route.ts`** (I011): `POST /api/v1/assessments/analyze`:
+  - Requires `preferences.aiConsent: true` (403 otherwise).
+  - Revalidates structured answers and recomputes deterministic results server-side.
+  - Validates narrative word caps server-side.
+  - Returns `not_scored` when neither exercise meets its content threshold.
+  - Runs `classifySafety()` on combined narrative text; returns `safety_interruption` on interrupt.
+  - Calls `analyze()` from I010; maps all provider error/disabled states to `unavailable`.
+  - Computes narrative score in application code from model rubric values (`calculateNarrativeScore`).
+  - Response union: `completed | not_scored | safety_interruption | unavailable`.
+  - `completed` includes `promptVersion: "RMP-AI-1.0"`, `narrativeScore`, and `analysis` (observations, experiments, excerpt, reviewPeriodDays). Raw rubric/penalty not exposed to client.
+  - Raw narrative text never included in response or persisted.
+  - 37 unit tests in `src/app/api/v1/assessments/analyze/route.test.ts`.
+  - `AnalysisOutputSchema` in I010 now also validates excerpt ≤ 24 words.
+
+What does **not** exist yet: observability, rate limiting (I013), security hardening (I014), E2E/a11y tests, AI eval fixtures.
 
 ## Git / environment
 
@@ -139,9 +159,12 @@ What does **not** exist yet: analyze endpoint (I011), observability, E2E/a11y te
 
 ## Recommended next steps
 
-1. **I011** (`POST /api/v1/assessments/analyze`) — all dependencies done (I010 ✅, I012 ✅).
-   The most complex remaining item (XL tier). Prompt assembly, strict schema validation,
-   safety integration (inject `classifySafety` from I012), 4 result states.
+1. **I013** (observability + rate limiting) or **I014** (security hardening) — both are Phase D
+   and have no remaining blockers. I013 is simpler (S tier); I014 is medium (M tier).
+   Either is a good next step now that Phase C is complete.
+
+2. **I015** (E2E test journeys, Playwright) — depends on I011 being done ✅, now unblocked.
+   XL tier; may warrant its own branch.
 
 ## Things to keep in mind (gotchas → see KNOWLEDGE.md for detail)
 

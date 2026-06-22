@@ -31,7 +31,13 @@ export const AnalysisOutputSchema = z.object({
     )
     .min(2)
     .max(3),
-  excerpt: z.string().min(1),
+  excerpt: z
+    .string()
+    .min(1)
+    .refine(
+      (text) => text.trim().split(/\s+/).filter((w) => w.length > 0).length <= 24,
+      { message: "excerpt must be at most 24 words" },
+    ),
   reviewPeriodDays: z.number().int().min(7).max(45),
   rubric: z.object({
     specificity: rubricValueSchema,
