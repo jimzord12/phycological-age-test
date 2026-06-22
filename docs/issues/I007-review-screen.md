@@ -1,6 +1,6 @@
 # I007 — Review screen
 
-- **Status:** ⬜ not started
+- **Status:** ✅ done
 - **Phase:** B (client flow)
 - **Depends on:** I005, I006
 - **Complexity:** 2
