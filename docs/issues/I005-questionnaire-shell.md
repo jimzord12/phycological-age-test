@@ -1,6 +1,6 @@
 # I005 — Questionnaire shell + structured item UI (accessible)
 
-- **Status:** ⬜ not started
+- **Status:** ✅ done
 - **Phase:** B (client flow)
 - **Depends on:** I003
 - **Complexity:** 4
