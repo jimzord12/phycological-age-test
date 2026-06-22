@@ -1,6 +1,6 @@
 # I004 — Landing + consent + eligibility / AI / age-metaphor choices
 
-- **Status:** ⬜ not started
+- **Status:** ✅ done
 - **Phase:** B (client flow)
 - **Depends on:** I003
 - **Complexity:** 3
@@ -25,11 +25,11 @@ device. No accounts, no manipulative urgency or social proof (PRD §7.1–§7.2,
 
 ## Acceptance criteria
 
-- [ ] User can reach the questionnaire without an account.
-- [ ] `Continue` is disabled until adult + non-clinical confirmations are checked.
-- [ ] Age metaphor defaults to off; AI opt-in shows privacy copy beside it.
-- [ ] No exact DOB requested; only `is_adult` stored (DOMAIN §15.3).
-- [ ] No urgency/social-proof patterns.
+- [x] User can reach the questionnaire without an account.
+- [x] `Continue` is disabled until adult + non-clinical confirmations are checked.
+- [x] Age metaphor defaults to off; AI opt-in shows privacy copy beside it.
+- [x] No exact DOB requested; only `is_adult` stored (DOMAIN §15.3).
+- [x] No urgency/social-proof patterns.
 
 ## References
 
