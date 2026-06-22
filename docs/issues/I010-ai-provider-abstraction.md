@@ -1,6 +1,6 @@
 # I010 — Provider-agnostic AI abstraction + adapters
 
-- **Status:** ⬜ not started
+- **Status:** ✅ done
 - **Phase:** C (AI layer)
 - **Depends on:** Phase 0
 - **Complexity:** 3
@@ -53,17 +53,17 @@ GLM endpoints are reachable via the SDK's configurable `baseURL`. See DD-5 for r
 
 ## Acceptance criteria
 
-- [ ] Swapping providers requires only env changes, no core code changes.
-- [ ] `createAnthropic({ baseURL })` works against both native Anthropic and Z.AI GLM
+- [x] Swapping providers requires only env changes, no core code changes.
+- [x] `createAnthropic({ baseURL })` works against both native Anthropic and Z.AI GLM
       Anthropic-compat URLs.
-- [ ] `createOpenAI({ baseURL })` works against Z.AI GLM OpenAI-compat URL.
-- [ ] With `AI_PROVIDER=none`, `analyze()` returns a disabled result; deterministic flow
+- [x] `createOpenAI({ baseURL })` works against Z.AI GLM OpenAI-compat URL.
+- [x] With `AI_PROVIDER=none`, `analyze()` returns a disabled result; deterministic flow
       is unaffected.
-- [ ] AI output is validated through a Zod schema via `generateObject()` — no raw JSON
+- [x] AI output is validated through a Zod schema via `generateObject()` — no raw JSON
       parsing.
-- [ ] Provider API key never present in client bundles, source maps, prompts, or logs.
-- [ ] Timeout configurable; at most one retry for transient errors; no retry on refusals.
-- [ ] Unit tests mock the SDK at the wrapper boundary; no live provider calls in CI.
+- [x] Provider API key never present in client bundles, source maps, prompts, or logs.
+- [x] Timeout configurable; at most one retry for transient errors; no retry on refusals.
+- [x] Unit tests mock the SDK at the wrapper boundary; no live provider calls in CI.
 
 ## References
 
