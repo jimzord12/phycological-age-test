@@ -31,9 +31,9 @@ export type NavigationTarget = {
  * 26-step flow (24 structured + 2 narrative exercises at steps 9 and 16).
  */
 export function toVisualStep(questionIndex: number): number {
-  if (questionIndex < 8) return questionIndex + 1;  // steps 1–8
+  if (questionIndex < 8) return questionIndex + 1; // steps 1–8
   if (questionIndex < 14) return questionIndex + 2; // steps 10–15 (step 9 = N01)
-  return questionIndex + 3;                         // steps 17–26 (steps 9, 16 = N01, N02)
+  return questionIndex + 3; // steps 17–26 (steps 9, 16 = N01, N02)
 }
 
 /**
@@ -133,10 +133,7 @@ export function QuestionnaireShell() {
   }
 
   function handleExit() {
-    if (
-      !window.confirm("Exit and delete all current answers? This cannot be undone.")
-    )
-      return;
+    if (!window.confirm("Exit and delete all current answers? This cannot be undone.")) return;
     dispatch({ type: "DISCARD", newVersion: questionnaire!.questionnaireVersion });
   }
 

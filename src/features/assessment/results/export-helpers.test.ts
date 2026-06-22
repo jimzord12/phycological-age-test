@@ -5,17 +5,15 @@ import {
   buildJsonExport,
   buildHtmlExport,
   exportDateStamp,
-} from "./_export-helpers";
-import type { ScoreResponse } from "@/app/api/v1/assessments/score/route";
+} from "./export-helpers";
+import type { ScoreResponse } from "@/contracts/scoring";
 import { QUESTIONNAIRE_VERSION } from "@/domain/versions";
 
 // ---------------------------------------------------------------------------
 // Fixture helpers
 // ---------------------------------------------------------------------------
 
-function makeResult(
-  overrides: Partial<ScoreResponse["result"]> = {},
-): ScoreResponse["result"] {
+function makeResult(overrides: Partial<ScoreResponse["result"]> = {}): ScoreResponse["result"] {
   return {
     scoringVersion: "RMP-SCORE-1.0",
     dimensions: {

@@ -49,9 +49,7 @@ describe("calculateConfidence", () => {
 
   it("deducts 5 when a consistency pair differs by more than 75 points", () => {
     // ER01 -> A (score 1), ER05 stays C (score 5): normalized diff = 100.
-    const answers = allC().map((a) =>
-      a.questionId === "ER01" ? { ...a, optionId: "A" } : a,
-    );
+    const answers = allC().map((a) => (a.questionId === "ER01" ? { ...a, optionId: "A" } : a));
     const result = confidenceFor(answers);
     expect(result.score).toBe(95);
     expect(result.reasons).toContainEqual({

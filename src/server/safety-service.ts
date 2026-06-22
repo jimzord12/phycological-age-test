@@ -41,7 +41,7 @@ export type SafetyMessage = {
  * A thrown error is treated as non-fatal; the rule-layer result is used instead.
  */
 export type ProviderClassifier = (
-  text: string
+  text: string,
 ) => Promise<
   | "interrupt_self_harm"
   | "interrupt_harm_others"
@@ -197,7 +197,7 @@ export function classifyRules(text: string): SafetyDecision {
  */
 export async function classifySafety(
   text: string,
-  providerClassifier?: ProviderClassifier
+  providerClassifier?: ProviderClassifier,
 ): Promise<SafetyDecision> {
   const ruleDecision = classifyRules(text);
 

@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { ClientProviders } from "./client-providers";
+import { ClientProviders } from "@/features/assessment/client-providers";
 
 export const metadata: Metadata = {
   title: "Reflective Maturity Profile",

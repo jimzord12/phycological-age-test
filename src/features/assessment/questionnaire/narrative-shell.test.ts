@@ -1,9 +1,5 @@
 import { describe, expect, it } from "vitest";
-import {
-  narrativeBack,
-  narrativeContinue,
-  NARRATIVE_VISUAL_STEPS,
-} from "./_narrative-shell";
+import { narrativeBack, narrativeContinue, NARRATIVE_VISUAL_STEPS } from "./narrative-shell";
 
 // ---------------------------------------------------------------------------
 // NARRATIVE_VISUAL_STEPS

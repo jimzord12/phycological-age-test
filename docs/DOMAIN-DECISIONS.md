@@ -35,10 +35,10 @@ items in <dimension>" state (handled in the results-screen issue), not a fabrica
 
 ## DD-2 — Narrative confidence when exactly one exercise meets its threshold
 
-**Source:** DOMAIN §10.4 governs *scoreability*: both exercises meeting threshold →
+**Source:** DOMAIN §10.4 governs _scoreability_: both exercises meeting threshold →
 scored; "either exercise fails its minimum-content threshold" → `limited_evidence`; both
 skipped or below threshold → `not_scored` (never zero). DOMAIN §11.5 governs the separate
-*narrative confidence* label: `High` (both meet), `Moderate` (one meets and the other
+_narrative confidence_ label: `High` (both meet), `Moderate` (one meets and the other
 contains meaningful content), `Low` (only one short exercise contains useful content),
 `Not available` (no scorable content). §11.5 does **not** define the case "one meets the
 threshold and the other is empty/skipped."
@@ -145,13 +145,13 @@ language.
 
 **Decision:** Five equal-ish bands on the 0–100 dimension score:
 
-| Score range | Label |
-| ----------- | ----- |
-| 0–24 | Emerging |
-| 25–49 | Developing |
-| 50–74 | Established |
-| 75–89 | Proficient |
-| 90–100 | Integrated |
+| Score range | Label       |
+| ----------- | ----------- |
+| 0–24        | Emerging    |
+| 25–49       | Developing  |
+| 50–74       | Established |
+| 75–89       | Proficient  |
+| 90–100      | Integrated  |
 
 Labels are descriptive and neutral — they describe a continuum of behavioral expression, not
 a judgment, rank, or clinical category.

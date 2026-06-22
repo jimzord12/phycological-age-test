@@ -13,7 +13,8 @@ in the root [`PROGRESS.md`](../../PROGRESS.md).
 - Do not modify question wording, score maps, formulas, or the AI rubric without a versioned
   domain change (DOMAIN §17). Record any necessary deviation in
   [`../DOMAIN-DECISIONS.md`](../DOMAIN-DECISIONS.md).
-- Each issue should land with its own tests and keep `pnpm check` + `pnpm test` green.
+- Each issue should land with its own tests and keep `pnpm check` green. The check command
+  includes formatting, linting, typechecking, coverage tests, and a production build.
 
 ## Suggested order
 

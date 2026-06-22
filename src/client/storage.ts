@@ -81,9 +81,7 @@ export function exportDraftAsJson(state: AssessmentState): void {
 }
 
 /** Returns a debounced version of fn that resets its timer on every call. */
-export function makeDebouncedSave(
-  ms: number,
-): (state: AssessmentState) => void {
+export function makeDebouncedSave(ms: number): (state: AssessmentState) => void {
   let timer: ReturnType<typeof setTimeout> | undefined;
   return (state: AssessmentState) => {
     clearTimeout(timer);

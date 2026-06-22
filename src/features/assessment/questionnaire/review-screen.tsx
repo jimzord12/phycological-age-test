@@ -271,11 +271,7 @@ export function ReviewScreen() {
                           ? "var(--text-muted)"
                           : "var(--warning)";
                     const statusLabel =
-                      status === "answered"
-                        ? "Answered"
-                        : status === "na"
-                          ? "N/A"
-                          : "Unanswered";
+                      status === "answered" ? "Answered" : status === "na" ? "N/A" : "Unanswered";
 
                     return (
                       <div
@@ -469,9 +465,7 @@ export function ReviewScreen() {
             <span style={{ color: "var(--text-secondary)", fontSize: "0.9375rem" }}>
               AI analysis
             </span>
-            <span
-              style={{ color: "var(--text-primary)", fontWeight: 500, fontSize: "0.9375rem" }}
-            >
+            <span style={{ color: "var(--text-primary)", fontWeight: 500, fontSize: "0.9375rem" }}>
               {state.preferences.includeAiAnalysis ? "Opted in" : "Not included"}
             </span>
           </div>
@@ -486,9 +480,7 @@ export function ReviewScreen() {
             <span style={{ color: "var(--text-secondary)", fontSize: "0.9375rem" }}>
               Age metaphor
             </span>
-            <span
-              style={{ color: "var(--text-primary)", fontWeight: 500, fontSize: "0.9375rem" }}
-            >
+            <span style={{ color: "var(--text-primary)", fontWeight: 500, fontSize: "0.9375rem" }}>
               {state.preferences.includeAgeMetaphor ? "Opted in" : "Not included"}
             </span>
           </div>

@@ -2,7 +2,7 @@
 
 import { useAssessment } from "@/client/assessment-context";
 import { PUBLIC_DISCLAIMER } from "@/domain/questionnaire";
-import { VersionMismatchBanner } from "./_version-mismatch-banner";
+import { VersionMismatchBanner } from "./version-mismatch-banner";
 
 const primaryButtonStyle: React.CSSProperties = {
   display: "inline-block",
@@ -41,9 +41,7 @@ export function LandingScreen() {
         aria-label="Assessment overview"
         style={{ marginBottom: 28, display: "flex", gap: 24, flexWrap: "wrap" }}
       >
-        <span style={{ color: "var(--text-muted)", fontSize: "0.875rem" }}>
-          10–15 minutes
-        </span>
+        <span style={{ color: "var(--text-muted)", fontSize: "0.875rem" }}>10–15 minutes</span>
         <span style={{ color: "var(--text-muted)", fontSize: "0.875rem" }}>
           24 multiple-choice questions + 2 written exercises
         </span>
@@ -63,9 +61,9 @@ export function LandingScreen() {
         }}
       >
         <p style={{ margin: 0, color: "var(--text-secondary)", fontSize: "0.9rem" }}>
-          <strong style={{ color: "var(--text-primary)" }}>Privacy:</strong> Your answers are
-          never sent to a server unless you explicitly opt in to AI analysis. Scoring is
-          computed entirely on this device. No ads, no tracking, no persistent storage.
+          <strong style={{ color: "var(--text-primary)" }}>Privacy:</strong> Your answers are never
+          sent to a server unless you explicitly opt in to AI analysis. Scoring is computed entirely
+          on this device. No ads, no tracking, no persistent storage.
         </p>
       </section>
 
@@ -124,9 +122,8 @@ export function LandingScreen() {
             </li>
           </ul>
           <p style={{ margin: 0, color: "var(--text-muted)", fontSize: "0.8rem" }}>
-            Results are deterministic — the same answers always produce the same scores.
-            Dimensions with too few answered questions are reported as insufficient data, not
-            penalized.
+            Results are deterministic — the same answers always produce the same scores. Dimensions
+            with too few answered questions are reported as insufficient data, not penalized.
           </p>
         </div>
       </details>

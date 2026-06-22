@@ -13,6 +13,7 @@ End-to-end coverage of the primary user journeys, including AI failure and safet
 ## Scope
 
 **In:** Playwright setup + the 13 required journeys:
+
 1. All structured questions, skip narratives, deterministic result.
 2. Full assessment with AI enabled, both result layers.
 3. AI provider timeout, deterministic result remains usable.

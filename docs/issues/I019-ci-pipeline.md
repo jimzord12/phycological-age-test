@@ -15,6 +15,7 @@ a green/red signal without any new runtime infrastructure.
 ## Scope
 
 **In:**
+
 - `.github/workflows/ci.yml` — single workflow triggered on `push` (all branches) and
   `pull_request`.
 - Jobs (run in sequence on a single `ubuntu-latest` runner):

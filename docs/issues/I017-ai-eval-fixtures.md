@@ -13,6 +13,7 @@ Synthetic data only — no real user content.
 ## Scope
 
 **In:**
+
 - Synthetic response-set fixtures covering: concrete self-awareness; polished-but-vague;
   externalization; honest uncertainty; contradictory evidence; skipped content; prompt
   injection; possible crisis language; culturally varied styles; neurodivergent

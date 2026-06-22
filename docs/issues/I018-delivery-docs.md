@@ -12,6 +12,7 @@ Delivery artifacts required by PRD §24 beyond code and tests.
 ## Scope
 
 **In:**
+
 - Privacy policy **draft**, explicitly marked for legal review (PRD §10.5), reflecting actual
   data handling: no accounts, no persistent raw-answer storage by default, narrative sent to
   the configured provider only on AI opt-in.

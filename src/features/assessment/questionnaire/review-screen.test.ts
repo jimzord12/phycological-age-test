@@ -1,10 +1,6 @@
 // @vitest-environment node
 import { describe, it, expect } from "vitest";
-import {
-  getNarrativeStatus,
-  getQuestionStatus,
-  getDimensionSummary,
-} from "./_review-screen";
+import { getNarrativeStatus, getQuestionStatus, getDimensionSummary } from "./review-screen";
 import { NARRATIVE_EXERCISES } from "@/domain/questionnaire";
 
 describe("getQuestionStatus", () => {
@@ -42,21 +38,30 @@ describe("getDimensionSummary", () => {
   });
 
   it("counts a mix of answered, na, and unanswered", () => {
-    expect(
-      getDimensionSummary(questions, { ER01: "B", ER02: "NA" }),
-    ).toEqual({ answered: 1, na: 1, unanswered: 1, total: 3 });
+    expect(getDimensionSummary(questions, { ER01: "B", ER02: "NA" })).toEqual({
+      answered: 1,
+      na: 1,
+      unanswered: 1,
+      total: 3,
+    });
   });
 
   it("counts all answered when every question has a non-NA option", () => {
-    expect(
-      getDimensionSummary(questions, { ER01: "A", ER02: "B", ER03: "C" }),
-    ).toEqual({ answered: 3, na: 0, unanswered: 0, total: 3 });
+    expect(getDimensionSummary(questions, { ER01: "A", ER02: "B", ER03: "C" })).toEqual({
+      answered: 3,
+      na: 0,
+      unanswered: 0,
+      total: 3,
+    });
   });
 
   it("counts all as na when every question chose NA", () => {
-    expect(
-      getDimensionSummary(questions, { ER01: "NA", ER02: "NA", ER03: "NA" }),
-    ).toEqual({ answered: 0, na: 3, unanswered: 0, total: 3 });
+    expect(getDimensionSummary(questions, { ER01: "NA", ER02: "NA", ER03: "NA" })).toEqual({
+      answered: 0,
+      na: 3,
+      unanswered: 0,
+      total: 3,
+    });
   });
 
   it("handles an empty question list", () => {
