@@ -5,7 +5,7 @@ maps remaining work to the self-contained issues in [`docs/issues/`](docs/issues
 
 **Legend:** ✅ done · 🟡 in progress · ⬜ not started
 
-Last updated: 2026-06-22
+Last updated: 2026-06-22 (I019 ✅)
 
 ---
 
@@ -63,7 +63,7 @@ Last updated: 2026-06-22
 | [I016](docs/issues/I016-accessibility-suite.md) | Accessibility test suite + audit | E | I008 | 3 |
 | [I017](docs/issues/I017-ai-eval-fixtures.md) | AI evaluation fixtures + harness | E | I011 | 3 |
 | [I018](docs/issues/I018-delivery-docs.md) | Privacy policy draft, threat model, deployment docs | F | — | 2 |
-| [I019](docs/issues/I019-ci-pipeline.md) | Minimal CI pipeline (GitHub Actions) | D | — | 1 |
+| [I019](docs/issues/I019-ci-pipeline.md) | Minimal CI pipeline (GitHub Actions) | D | — | ✅ |
 
 Complexity is 1–5 (per the project's complexity-rating convention). No item is rated 5;
 if one grows during implementation, decompose it before starting.

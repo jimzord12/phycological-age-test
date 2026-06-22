@@ -1,6 +1,6 @@
 # I019 — Minimal CI pipeline (GitHub Actions)
 
-- **Status:** ⬜ not started
+- **Status:** ✅ done
 - **Phase:** D (cross-cutting)
 - **Depends on:** none
 - **Complexity:** 1
@@ -32,12 +32,12 @@ Playwright E2E (those come later under I015/I018).
 
 ## Acceptance criteria
 
-- [ ] Workflow file present at `.github/workflows/ci.yml`.
-- [ ] All four steps (install → typecheck → test → build) run and must pass for the
+- [x] Workflow file present at `.github/workflows/ci.yml`.
+- [x] All four steps (install → typecheck → test → build) run and must pass for the
       workflow to succeed.
-- [ ] pnpm store is cached between runs (keyed on `pnpm-lock.yaml` hash).
-- [ ] Workflow runs on push to any branch and on pull requests.
-- [ ] No secrets, credentials, or environment-specific config required to pass CI
+- [x] pnpm store is cached between runs (keyed on `pnpm-lock.yaml` hash).
+- [x] Workflow runs on push to any branch and on pull requests.
+- [x] No secrets, credentials, or environment-specific config required to pass CI
       (the deterministic path runs with AI disabled by default).
 
 ## Implementation notes
