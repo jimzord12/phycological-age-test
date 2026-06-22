@@ -14,7 +14,7 @@ _Last updated: 2026-06-22_
 
 ## Where things stand
 
-**Phase 0, Phase A, I003, I004, and I005 (Phase B) are complete. 119 tests pass.**
+**Phase 0, Phase A, I003, I004, I005, and I006 (Phase B) are complete. 129 tests pass.**
 
 - Phase 0: pure domain layer — canonical bank, scoring, confidence, narrative scoring.
 - I001: `GET /api/v1/questionnaire` (score-free, Zod-validated, cached).
@@ -23,6 +23,7 @@ _Last updated: 2026-06-22_
 - I003: Client assessment state + session persistence — done.
 - I004: Landing + consent screens — done.
 - I005: Questionnaire shell + structured item UI — done.
+- I006: Narrative exercise UI — done.
 
 What exists today:
 - `src/domain/` — canonical bank (24 structured + 2 narrative), `scoreStructuredAssessment`,
@@ -60,10 +61,23 @@ What exists today:
     - Exports `toVisualStep`, `nextOnContinue`, `nextOnBack` for unit testing.
     - Tests: 16 cases covering visual step mapping and all navigation transitions.
   - `page.tsx` — renders `<HomeFlow />`.
+  - **`_narrative-shell.tsx`** (I006): two optional narrative exercises (N01, N02):
+    - Progress bar shows step 9/26 (N01) or 16/26 (N02); "OPTIONAL" badge.
+    - Exercise title, intro text, and per-field textareas with live word counts.
+    - 80% warning (yellow); hard cap at `maxWords` via controlled textarea — rejects changes
+      that would push word count over the limit without losing existing text.
+    - Privacy notice below fields.
+    - Back / Continue / "Skip this exercise" buttons. Skip and Continue navigate identically;
+      the exercise is always optional (no required answers).
+    - Navigation: N01 Back → questionnaire/7; N01 Continue → questionnaire/8; N02 Back →
+      questionnaire/13; N02 Continue → review/0.
+    - Pure helpers `narrativeBack`, `narrativeContinue`, `NARRATIVE_VISUAL_STEPS` exported
+      and covered by 10 unit tests in `_narrative-shell.test.ts`.
+  - `_home-flow.tsx` updated to route `phase === "narrative"` to `<NarrativeShell />`.
 - Docs: `docs/DOMAIN-DECISIONS.md` (DD-1..DD-5), `PROGRESS.md`, `docs/issues/` (I001–I019),
   `AGENTS.md`, `KNOWLEDGE.md`.
 
-What does **not** exist yet: narrative/review/results UI (I006–I009),
+What does **not** exist yet: review/results UI (I007–I009),
 AI layer, safety service, observability, E2E/a11y tests.
 
 ## Git / environment
@@ -74,14 +88,12 @@ AI layer, safety service, observability, E2E/a11y tests.
 
 ## Recommended next steps
 
-1. **I006** — Narrative exercise UI. The two narrative exercises (N01, N02) are already
-   wired to phase "narrative" stepIndex 0/1 by the questionnaire shell. I006 needs to:
-   - Render each exercise title, intro, and textarea fields with word counts.
-   - Enforce per-field `maxWords` caps (soft warning or hard cap).
-   - Dispatch `SET_NARRATIVE_FIELD` on change (already in the reducer).
-   - Continue → transition back to "questionnaire" at stepIndex 8 (after N01) or
-     stepIndex 14 (after N02), then to "review" after N02.
-2. I007 (review) → I008 (results) follow naturally after I006.
+1. **I007** — Review screen. Shows a summary of all structured answers (dimension groups)
+   and narrative drafts; lets the user jump back to edit any item; "Submit" transitions to
+   `phase: "submitted"` and triggers the score API call.
+2. **I008** — Deterministic results screen. Calls `POST /api/v1/assessments/score` and
+   renders the full profile: dimension scores, SMI, confidence, age metaphor (if opted in),
+   and all required text equivalents for charts.
 3. **I019** (CI pipeline) — can be done at any time; no dependencies. Single
    `.github/workflows/ci.yml` file: install → typecheck → test → build, triggered on push
    and PR. Good quick win between heavier Phase B issues.

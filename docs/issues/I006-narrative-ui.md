@@ -1,6 +1,6 @@
 # I006 — Narrative exercise UI (optional, word caps)
 
-- **Status:** ⬜ not started
+- **Status:** ✅ done
 - **Phase:** B (client flow)
 - **Depends on:** I005
 - **Complexity:** 2
