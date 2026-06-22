@@ -14,7 +14,7 @@ _Last updated: 2026-06-22_
 
 ## Where things stand
 
-**Phase 0, Phase A, I003, and I004 (Phase B) are complete. 103 tests pass.**
+**Phase 0, Phase A, I003, I004, and I005 (Phase B) are complete. 119 tests pass.**
 
 - Phase 0: pure domain layer — canonical bank, scoring, confidence, narrative scoring.
 - I001: `GET /api/v1/questionnaire` (score-free, Zod-validated, cached).
@@ -22,6 +22,7 @@ _Last updated: 2026-06-22_
   typed error responses, 17 contract tests.
 - I003: Client assessment state + session persistence — done.
 - I004: Landing + consent screens — done.
+- I005: Questionnaire shell + structured item UI — done.
 
 What exists today:
 - `src/domain/` — canonical bank (24 structured + 2 narrative), `scoreStructuredAssessment`,
@@ -33,21 +34,36 @@ What exists today:
 - **`src/client/`** (I003):
   - `assessment-state.ts`, `storage.ts`, `assessment-context.tsx`, `use-questionnaire.ts`.
   - Tests: `assessment-state.test.ts` (18 tests), `storage.test.ts` (10 tests).
-- **`src/app/`** (I004) — live landing + consent flow:
+- **`src/app/`** (I004 + I005) — live landing + consent + questionnaire flow:
   - `client-providers.tsx` — `ClientProviders` wraps `AssessmentProvider`; added to
     `layout.tsx` so every page can use `useAssessment()`.
   - `_home-flow.tsx` — client component; routes by `state.phase` + `state.stepIndex`.
+    Phase "questionnaire" → `<QuestionnaireShell />`. Phase "narrative" shows I006
+    placeholder. Phases "review"/"submitted" show I007–I008 placeholders.
   - `_landing-screen.tsx` — title, privacy summary, expandable "How scoring works",
     disclaimer, "Start assessment" button. Shows version-mismatch banner if needed.
   - `_consent-screen.tsx` — adult + non-clinical required checkboxes; AI opt-in with
     consent copy always shown adjacent; age-metaphor toggle with disclosure; privacy link;
     Continue (disabled until both required checks pass).
   - `_version-mismatch-banner.tsx` — export/discard UI for stale drafts.
+  - `_questionnaire-shell.tsx` — 24-item structured questionnaire UI (I005):
+    - Progress bar: "Step X of 26" (accounts for 2 narrative steps at 9 and 16).
+    - Dimension label shown next to step count (no score direction).
+    - `role="radiogroup"` labeled by question heading (h2 with `tabIndex={-1}`).
+    - Each option: `<label>` wrapping `<input type="radio">`, ≥ 44px touch target,
+      accent highlight when selected, NA option visually muted.
+    - Back / Continue (disabled without answer) / "Finish questions" on last item.
+    - "Exit and delete current answers" with `window.confirm` guard.
+    - Narrative placement hooks: after item 8 → narrative/0 (N01); after item 14 →
+      narrative/1 (N02); after item 24 → review/0 (DOMAIN §6.3).
+    - Back at index 8 → narrative/0; at index 14 → narrative/1; at index 0 → consent/1.
+    - Exports `toVisualStep`, `nextOnContinue`, `nextOnBack` for unit testing.
+    - Tests: 16 cases covering visual step mapping and all navigation transitions.
   - `page.tsx` — renders `<HomeFlow />`.
 - Docs: `docs/DOMAIN-DECISIONS.md` (DD-1..DD-5), `PROGRESS.md`, `docs/issues/` (I001–I019),
   `AGENTS.md`, `KNOWLEDGE.md`.
 
-What does **not** exist yet: questionnaire/narrative/review/results UI (I005–I009),
+What does **not** exist yet: narrative/review/results UI (I006–I009),
 AI layer, safety service, observability, E2E/a11y tests.
 
 ## Git / environment
@@ -58,13 +74,14 @@ AI layer, safety service, observability, E2E/a11y tests.
 
 ## Recommended next steps
 
-1. **I005** — Questionnaire shell + structured item UI (a11y). This is the next Phase B item.
-   - `_home-flow.tsx` already has a placeholder for `phase === "questionnaire"` — replace
-     it with the real questionnaire component.
-   - Use `useAssessment()` and `useQuestionnaire()` from `src/client/` — no wiring needed.
-   - 26 steps (24 structured questions + intro + maybe progress bar). Focus on keyboard nav
-     and radio group accessibility.
-2. I006 (narrative UI) → I007 (review) → I008 (results) follow naturally after I005.
+1. **I006** — Narrative exercise UI. The two narrative exercises (N01, N02) are already
+   wired to phase "narrative" stepIndex 0/1 by the questionnaire shell. I006 needs to:
+   - Render each exercise title, intro, and textarea fields with word counts.
+   - Enforce per-field `maxWords` caps (soft warning or hard cap).
+   - Dispatch `SET_NARRATIVE_FIELD` on change (already in the reducer).
+   - Continue → transition back to "questionnaire" at stepIndex 8 (after N01) or
+     stepIndex 14 (after N02), then to "review" after N02.
+2. I007 (review) → I008 (results) follow naturally after I006.
 3. **I019** (CI pipeline) — can be done at any time; no dependencies. Single
    `.github/workflows/ci.yml` file: install → typecheck → test → build, triggered on push
    and PR. Good quick win between heavier Phase B issues.
@@ -72,8 +89,8 @@ AI layer, safety service, observability, E2E/a11y tests.
 
 ## Things to keep in mind (gotchas → see KNOWLEDGE.md for detail)
 
-- **`_home-flow.tsx` placeholder:** when `state.phase !== "consent"`, a placeholder renders.
-  I005 replaces this with the real questionnaire component.
+- **`_home-flow.tsx` placeholder:** when `state.phase` is "narrative", "review", or
+  "submitted", a placeholder renders. I006–I008 replace these.
 - **Non-clinical acknowledgement is local state only.** In `_consent-screen.tsx`, the
   `nonClinicalAcknowledged` checkbox is React local state (not persisted). If the user
   refreshes while in phase "consent" stepIndex 1, they'll need to re-check it. This is

@@ -49,7 +49,7 @@ Last updated: 2026-06-22
 | [I002](docs/issues/I002-score-api.md) | `POST /api/v1/assessments/score` + validation | A | Phase 0 | ✅ |
 | [I003](docs/issues/I003-client-state-persistence.md) | Client assessment state + session persistence | B | I001 | ✅ |
 | [I004](docs/issues/I004-landing-consent.md) | Landing + consent + eligibility/AI/age-metaphor choices | B | I003 | ✅ |
-| [I005](docs/issues/I005-questionnaire-shell.md) | Questionnaire shell + structured item UI (a11y) | B | I003 | 4 |
+| [I005](docs/issues/I005-questionnaire-shell.md) | Questionnaire shell + structured item UI (a11y) | B | I003 | ✅ |
 | [I006](docs/issues/I006-narrative-ui.md) | Narrative exercise UI (optional, word caps) | B | I005 | 2 |
 | [I007](docs/issues/I007-review-screen.md) | Review screen | B | I005, I006 | 2 |
 | [I008](docs/issues/I008-deterministic-results.md) | Deterministic results screen (text equivalents) | B | I002, I003 | 4 |
