@@ -1,6 +1,6 @@
 # I008 — Deterministic results screen (with text equivalents)
 
-- **Status:** ⬜ not started
+- **Status:** ✅ done
 - **Phase:** B (client flow)
 - **Depends on:** I002, I003
 - **Complexity:** 4
