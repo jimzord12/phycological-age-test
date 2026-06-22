@@ -134,3 +134,30 @@ support is an additional fit.
 
 **Implemented in:** `src/server/ai-provider.ts` (when I010 lands); env vars documented in
 `docs/issues/I010-ai-provider-abstraction.md`.
+
+---
+
+## DD-6 — Dimension score band labels (DOMAIN §12.1)
+
+**Source:** DOMAIN §12.1 prescribes "descriptive UI labels" for dimension score bands but
+does not enumerate the specific band names or cut-points. PRD §8 requires neutral, non-clinical
+language.
+
+**Decision:** Five equal-ish bands on the 0–100 dimension score:
+
+| Score range | Label |
+| ----------- | ----- |
+| 0–24 | Emerging |
+| 25–49 | Developing |
+| 50–74 | Established |
+| 75–89 | Proficient |
+| 90–100 | Integrated |
+
+Labels are descriptive and neutral — they describe a continuum of behavioral expression, not
+a judgment, rank, or clinical category.
+
+**Rationale:** The cut-points align naturally with the 1–5 raw item scale normalized to 0–100:
+a raw mean of 1.0 → 0, 2.0 → 25, 3.0 → 50, 4.0 → 75, 5.0 → 100. The top two bands (Proficient
+90+, Integrated) are narrower because the normalized scale clusters at 75 and 100 at the high end.
+
+**Implemented in:** `src/app/_results-screen.tsx` (`getBandLabel`).

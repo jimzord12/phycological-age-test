@@ -14,7 +14,7 @@ _Last updated: 2026-06-22_
 
 ## Where things stand
 
-**Phase 0, Phase A, I003, I004, I005, I006, and I007 (Phase B) are complete. 147 tests pass.**
+**Phase 0, Phase A, I003, I004, I005, I006, I007, and I008 (Phase B) are complete. 169 tests pass.**
 
 - Phase 0: pure domain layer — canonical bank, scoring, confidence, narrative scoring.
 - I001: `GET /api/v1/questionnaire` (score-free, Zod-validated, cached).
@@ -74,7 +74,7 @@ What exists today:
       questionnaire/13; N02 Continue → review/0.
     - Pure helpers `narrativeBack`, `narrativeContinue`, `NARRATIVE_VISUAL_STEPS` exported
       and covered by 10 unit tests in `_narrative-shell.test.ts`.
-  - `_home-flow.tsx` updated to route `phase === "narrative"` to `<NarrativeShell />` and `phase === "review"` to `<ReviewScreen />`.
+  - `_home-flow.tsx` updated to route `phase === "narrative"` → `<NarrativeShell />`, `phase === "review"` → `<ReviewScreen />`, and `phase === "submitted"` → `<ResultsScreen />`.
   - **`_review-screen.tsx`** (I007): review screen before submission:
     - Per-dimension completion counts (answered / N/A / unanswered) with amber border when any unanswered.
     - All 24 structured questions listed (grouped by dimension) with status tags and "Edit" buttons that jump directly to that question.
@@ -82,10 +82,22 @@ What exists today:
     - Choices summary (AI analysis, age metaphor) shown read-only.
     - Back → narrative/1 (N02); Submit → `phase: "submitted"` (score API call is I008's job).
     - Pure helpers `getNarrativeStatus`, `getQuestionStatus`, `getDimensionSummary` exported and covered by 18 unit tests in `_review-screen.test.ts`.
-- Docs: `docs/DOMAIN-DECISIONS.md` (DD-1..DD-5), `PROGRESS.md`, `docs/issues/` (I001–I019),
+  - **`_results-screen.tsx`** (I008): deterministic results screen:
+    - Calls `POST /api/v1/assessments/score` on mount; shows loading → success/error states.
+    - Non-clinical disclaimer always shown at top.
+    - Structured Maturity Index: large number (0–100) or "Index unavailable" state (DD-1).
+    - Five dimension cards: reportable → score + horizontal bar + band label (DD-6: Emerging/Developing/Established/Proficient/Integrated); insufficient → "Insufficient data" with how many more answers needed.
+    - Profile balance label + spread when not null.
+    - Strength & Development Areas: strongest dimension + up to 2 lower dimensions (DOMAIN §12.3).
+    - Confidence section: label + score + human-readable reasons list.
+    - Age metaphor: only when `preferences.includeAgeMetaphor` is true AND `ageMetaphor` is not null; always shows qualifying copy.
+    - AI analysis placeholder (I011 slot) and Export/Start over actions (I009 slot).
+    - All bar charts have `role="img"` with `aria-label` text equivalent.
+    - Exports `getBandLabel`, `getGrowthAreas`, `formatConfidenceReason` for testing (22 unit tests in `_results-screen.test.ts`).
+- Docs: `docs/DOMAIN-DECISIONS.md` (DD-1..DD-6), `PROGRESS.md`, `docs/issues/` (I001–I019),
   `AGENTS.md`, `KNOWLEDGE.md`.
 
-What does **not** exist yet: results UI (I008–I009),
+What does **not** exist yet: export/start-over actions (I009),
 AI layer, safety service, observability, E2E/a11y tests.
 
 ## Git / environment
@@ -96,10 +108,8 @@ AI layer, safety service, observability, E2E/a11y tests.
 
 ## Recommended next steps
 
-1. **I008** — Deterministic results screen. Calls `POST /api/v1/assessments/score` and
-   renders the full profile: dimension scores, SMI, confidence, age metaphor (if opted in),
-   and all required text equivalents for charts.
-3. **I019** (CI pipeline) — can be done at any time; no dependencies. Single
+1. **I009** — Export (HTML/JSON) + start over. Adds the export button to the results screen and a "Start over" confirmation. Simple issue, no major dependencies.
+2. **I019** (CI pipeline) — can be done at any time; no dependencies. Single
    `.github/workflows/ci.yml` file: install → typecheck → test → build, triggered on push
    and PR. Good quick win between heavier Phase B issues.
 4. The AI layer (I010 → I012 → I011) only after Phase B is solid (PRD §25).

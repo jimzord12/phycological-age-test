@@ -6,6 +6,7 @@ import { ConsentScreen } from "./_consent-screen";
 import { QuestionnaireShell } from "./_questionnaire-shell";
 import { NarrativeShell } from "./_narrative-shell";
 import { ReviewScreen } from "./_review-screen";
+import { ResultsScreen } from "./_results-screen";
 
 /** Routes to the correct screen based on phase and stepIndex. */
 export function HomeFlow() {
@@ -28,13 +29,6 @@ export function HomeFlow() {
     return <ReviewScreen />;
   }
 
-  // Results screen (I008) comes next.
-  return (
-    <main>
-      <h1>Assessment submitted</h1>
-      <p style={{ color: "var(--text-secondary)" }}>
-        Results screen coming in I008.
-      </p>
-    </main>
-  );
+  // "submitted" phase → deterministic results (I008).
+  return <ResultsScreen />;
 }
