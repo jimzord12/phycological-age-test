@@ -138,11 +138,11 @@ describe("calculateNarrativeScore", () => {
   });
 
   it("returns not_scored when neither exercise meets its threshold", () => {
-    expect(
-      calculateNarrativeScore(FULL_RUBRIC, 0, { N01: "meaningful", N02: "empty" }),
-    ).toEqual({ status: "not_scored" });
-    expect(
-      calculateNarrativeScore(FULL_RUBRIC, 0, { N01: "empty", N02: "empty" }),
-    ).toEqual({ status: "not_scored" });
+    expect(calculateNarrativeScore(FULL_RUBRIC, 0, { N01: "meaningful", N02: "empty" })).toEqual({
+      status: "not_scored",
+    });
+    expect(calculateNarrativeScore(FULL_RUBRIC, 0, { N01: "empty", N02: "empty" })).toEqual({
+      status: "not_scored",
+    });
   });
 });

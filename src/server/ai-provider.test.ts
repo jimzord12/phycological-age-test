@@ -51,10 +51,7 @@ const VALID_OUTPUT: AnalysisOutput = {
 
 // ------ Helpers ---------------------------------------------------------------
 
-function stubProvider(
-  kind: "anthropic" | "openai" | "none",
-  extra: Record<string, string> = {}
-) {
+function stubProvider(kind: "anthropic" | "openai" | "none", extra: Record<string, string> = {}) {
   vi.stubEnv("AI_PROVIDER", kind);
   if (kind === "anthropic") {
     vi.stubEnv("ANTHROPIC_MODEL", "test-model");
@@ -184,7 +181,11 @@ describe("analyze — error classification", () => {
         inputTokens: 0,
         outputTokens: 0,
         totalTokens: 0,
-        inputTokenDetails: { noCacheTokens: undefined, cacheReadTokens: undefined, cacheWriteTokens: undefined },
+        inputTokenDetails: {
+          noCacheTokens: undefined,
+          cacheReadTokens: undefined,
+          cacheWriteTokens: undefined,
+        },
         outputTokenDetails: { textTokens: undefined, reasoningTokens: undefined },
       },
       finishReason: "stop",
@@ -239,26 +240,41 @@ describe("AnalysisOutputSchema", () => {
   });
 
   it("rejects more than 5 observations", () => {
-    const extra = [...VALID_OUTPUT.observations, ...VALID_OUTPUT.observations, ...VALID_OUTPUT.observations];
-    expect(AnalysisOutputSchema.safeParse({ ...VALID_OUTPUT, observations: extra }).success).toBe(false);
+    const extra = [
+      ...VALID_OUTPUT.observations,
+      ...VALID_OUTPUT.observations,
+      ...VALID_OUTPUT.observations,
+    ];
+    expect(AnalysisOutputSchema.safeParse({ ...VALID_OUTPUT, observations: extra }).success).toBe(
+      false,
+    );
   });
 
   it("rejects fewer than 2 behavioral experiments", () => {
-    const bad = { ...VALID_OUTPUT, behavioralExperiments: [VALID_OUTPUT.behavioralExperiments[0]!] };
+    const bad = {
+      ...VALID_OUTPUT,
+      behavioralExperiments: [VALID_OUTPUT.behavioralExperiments[0]!],
+    };
     expect(AnalysisOutputSchema.safeParse(bad).success).toBe(false);
   });
 
   it("rejects more than 3 behavioral experiments", () => {
     const extra = [...VALID_OUTPUT.behavioralExperiments, ...VALID_OUTPUT.behavioralExperiments];
-    expect(AnalysisOutputSchema.safeParse({ ...VALID_OUTPUT, behavioralExperiments: extra }).success).toBe(false);
+    expect(
+      AnalysisOutputSchema.safeParse({ ...VALID_OUTPUT, behavioralExperiments: extra }).success,
+    ).toBe(false);
   });
 
   it("rejects reviewPeriodDays < 7", () => {
-    expect(AnalysisOutputSchema.safeParse({ ...VALID_OUTPUT, reviewPeriodDays: 6 }).success).toBe(false);
+    expect(AnalysisOutputSchema.safeParse({ ...VALID_OUTPUT, reviewPeriodDays: 6 }).success).toBe(
+      false,
+    );
   });
 
   it("rejects reviewPeriodDays > 45", () => {
-    expect(AnalysisOutputSchema.safeParse({ ...VALID_OUTPUT, reviewPeriodDays: 46 }).success).toBe(false);
+    expect(AnalysisOutputSchema.safeParse({ ...VALID_OUTPUT, reviewPeriodDays: 46 }).success).toBe(
+      false,
+    );
   });
 
   it("rejects rubric value outside 0–2", () => {
@@ -271,6 +287,8 @@ describe("AnalysisOutputSchema", () => {
   });
 
   it("rejects non-integer reviewPeriodDays", () => {
-    expect(AnalysisOutputSchema.safeParse({ ...VALID_OUTPUT, reviewPeriodDays: 14.5 }).success).toBe(false);
+    expect(
+      AnalysisOutputSchema.safeParse({ ...VALID_OUTPUT, reviewPeriodDays: 14.5 }).success,
+    ).toBe(false);
   });
 });

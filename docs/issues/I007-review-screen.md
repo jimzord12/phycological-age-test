@@ -13,6 +13,7 @@ desirability (PRD §7.6).
 ## Scope
 
 **In:**
+
 - Completion count by dimension; list of unanswered or `Not applicable` items; per-narrative
   status (complete / partial / skipped); AI-analysis choice; age-metaphor choice; ability to
   jump to any item; `Submit assessment`.

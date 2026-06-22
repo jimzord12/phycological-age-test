@@ -30,10 +30,7 @@ export type DimensionResult =
   | { status: "insufficient_data"; answered: number; required: number; available: number };
 
 /** Profile balance is descriptive, not punitive (DOMAIN §9.4). */
-export type ProfileBalanceLabel =
-  | "relatively_balanced"
-  | "some_unevenness"
-  | "strongly_uneven";
+export type ProfileBalanceLabel = "relatively_balanced" | "some_unevenness" | "strongly_uneven";
 
 export type ProfileBalance = {
   spread: number;

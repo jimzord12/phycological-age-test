@@ -13,6 +13,7 @@ device. No accounts, no manipulative urgency or social proof (PRD §7.1–§7.2,
 ## Scope
 
 **In:**
+
 - Landing: title, concise explanation, estimated duration, non-clinical disclaimer, privacy
   summary, `Start assessment`, expandable `How scoring works`.
 - Consent: adult confirmation checkbox; non-clinical acknowledgement; AI-analysis opt-in

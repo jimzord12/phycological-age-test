@@ -1,11 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { STRUCTURED_QUESTIONS } from "@/domain/questionnaire";
 import type { DimensionId } from "@/domain/result-types";
-import {
-  processScoreRequest,
-  ScoreResponseSchema,
-  type ScoreRequestInput,
-} from "./route";
+import { processScoreRequest, ScoreResponseSchema, type ScoreRequestInput } from "./route";
 
 // ---------------------------------------------------------------------------
 // Fixtures
@@ -77,9 +73,7 @@ describe("processScoreRequest — success paths", () => {
     if (!a.ok || !b.ok) return;
     // assessmentId differs (UUID); scores must be identical
     expect(a.payload.result.dimensions).toEqual(b.payload.result.dimensions);
-    expect(a.payload.result.structuredMaturityIndex).toBe(
-      b.payload.result.structuredMaturityIndex,
-    );
+    expect(a.payload.result.structuredMaturityIndex).toBe(b.payload.result.structuredMaturityIndex);
     expect(a.payload.result.confidence.score).toBe(b.payload.result.confidence.score);
   });
 

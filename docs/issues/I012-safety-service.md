@@ -14,9 +14,10 @@ classifier (PRD §16; DOMAIN §15).
 ## Scope
 
 **In:**
+
 - `src/server/safety-service.ts` returning `SafetyDecision`:
   `allow | interrupt (self_harm_immediate | harm_to_others_immediate | active_emergency) |
-  review_fallback (ambiguous_high_risk)`.
+review_fallback (ambiguous_high_risk)`.
 - Implementation: a conservative internal rule layer plus a provider safety/moderation
   classification — independent of the maturity-analysis prompt.
 - On `interrupt`: suppress normal narrative scoring, return `safety_interruption` with a

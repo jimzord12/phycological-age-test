@@ -14,6 +14,7 @@ exposes `getPublicQuestionnaire()` which strips scores.
 ## Scope
 
 **In:**
+
 - Route handler at `src/app/api/v1/questionnaire/route.ts` returning the public payload:
   `questionnaireVersion`, `scoringVersion`, `steps`/`structured`+`narrative`, `disclaimer`,
   `estimatedMinutes: { min: 12, max: 18 }`.

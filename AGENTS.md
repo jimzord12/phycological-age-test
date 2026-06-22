@@ -7,7 +7,7 @@ Canonical guide for any agent (or human) working in this repository. Read this f
 
 ## 1. Project vision & purpose
 
-**Reflective Maturity Profile** (working public title: *Psychological Age Test*) is a
+**Reflective Maturity Profile** is a
 privacy-first web app that guides an adult through a reflective self-assessment of
 maturity-related behaviors and returns a **deterministic** maturity profile, plus an
 **optional**, clearly-qualified AI-assisted narrative analysis.
@@ -38,7 +38,7 @@ Where those docs are silent or ambiguous, resolutions live in
 
 - **Next.js 16** (App Router, Turbopack) + **React 19**
 - **TypeScript** strict (`noUncheckedIndexedAccess`, `verbatimModuleSyntax` — see KNOWLEDGE.md)
-- **Zod** for runtime validation (used as API layers land)
+- **Zod** for runtime validation
 - **Vitest** for unit tests; Playwright planned for E2E (issue I015)
 - **pnpm** (pinned `packageManager`), Node ≥ 22
 
@@ -46,9 +46,12 @@ Where those docs are silent or ambiguous, resolutions live in
 
 ```
 src/
-  app/                      # Next.js App Router (UI + /api/v1 routes as they land)
+  app/                      # Next.js App Router: layout, page composition, and API routes
     api/v1/                 # questionnaire (I001), assessments/score (I002), analyze (I011)
     layout.tsx, page.tsx, globals.css
+  contracts/                # shared API request/response schemas and inferred types
+  features/assessment/      # assessment flow screens, components, helpers, and UI tests
+  client/                   # assessment state, persistence, context, questionnaire client
   domain/                   # PURE, framework-free domain core (see dependency rule)
     versions.ts             # RMP-1.0 / RMP-SCORE-1.0 / RMP-AI-1.0 identifiers
     result-types.ts         # discriminated-union result types
@@ -57,11 +60,11 @@ src/
     confidence.ts           # confidence score + machine-readable reasons
     narrative-rubric.ts     # word counts, content thresholds, narrative score
     *.test.ts               # co-located unit tests
-  server/                   # (planned) ai-provider, analysis-service, safety-service, rate-limit, logging
+  server/                   # AI-provider and safety services; analysis/rate-limit/logging planned
 docs/
   DOMAIN-DECISIONS.md       # DD-* clarifications for spec gaps
   Handoff.md                # rolling agent-to-agent handoff (read on arrival)
-  issues/                   # I001–I018 self-contained work items + README
+  issues/                   # I001–I019 self-contained work items + README
 PROGRESS.md                 # delivery status / milestone tracker (root)
 KNOWLEDGE.md                # project quirks & edge cases (root)
 scripts/check-knowledge-size.sh
@@ -74,8 +77,10 @@ no network, no I/O) so results are deterministic and testable.
 ## 5. The do's and don'ts
 
 **Do**
+
 - Read `docs/Handoff.md` first, then `PROGRESS.md` and the relevant `docs/issues/` file.
-- Keep `pnpm check`-equivalents green: run `pnpm test` and `pnpm typecheck` before committing.
+- Keep `pnpm check` green; it runs formatting checks, linting, typechecking, coverage tests,
+  and the production build.
 - Add tests with every change; co-locate `*.test.ts` next to the code.
 - Preserve domain identifiers and version values exactly.
 - Land work as the vertical slices described in `docs/issues/`; update `PROGRESS.md` status.
@@ -98,6 +103,7 @@ no network, no I/O) so results are deterministic and testable.
   branches with no associated issue.
 
 **Don't**
+
 - Don't change question wording, answer order, score maps, formulas, rubric rules, or the
   AI prompt without a **version increment** (DOMAIN §17). These are not free edits.
 - Don't expose numeric option scores to the client (use `getPublicQuestionnaire()`).
@@ -115,7 +121,7 @@ like one developer built it.
 
 - **`docs/Handoff.md`** — narrative continuity: current state, what just happened, what to do
   next, open questions, and any warnings. Update it at the end of a working session.
-- **`KNOWLEDGE.md`** — terse catalogue of *quirks/edge cases* discovered only by working on
+- **`KNOWLEDGE.md`** — terse catalogue of _quirks/edge cases_ discovered only by working on
   the project (e.g. a tooling gotcha). These are NOT architecture decisions (those go to
   `docs/DOMAIN-DECISIONS.md`) — they are infrastructure/behavior surprises that would
   otherwise cost the next agent a debug loop. Keep each record short and to the point.
@@ -142,10 +148,8 @@ doing anything else. Do not let it grow unbounded.
 
 ```bash
 pnpm install          # Node >= 22
-pnpm test             # unit tests (Vitest)
-pnpm typecheck        # tsc --noEmit
-pnpm build            # production build (Next 16)
-pnpm dev              # http://localhost:3000 (placeholder landing for now)
+pnpm check            # format, lint, typecheck, coverage, and production build
+pnpm dev              # http://localhost:3000
 ```
 
 The app must always run with **AI disabled** (the default). Copy `.env.example` to

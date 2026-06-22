@@ -17,9 +17,9 @@ import { QUESTIONNAIRE_VERSION } from "@/domain/versions";
  */
 describe("KNOWLEDGE.md quirk detectors", () => {
   it("K: strict tsconfig flags stay enabled (noUncheckedIndexedAccess, verbatimModuleSyntax)", () => {
-    const tsconfig = JSON.parse(
-      readFileSync(join(process.cwd(), "tsconfig.json"), "utf8"),
-    ) as { compilerOptions: Record<string, unknown> };
+    const tsconfig = JSON.parse(readFileSync(join(process.cwd(), "tsconfig.json"), "utf8")) as {
+      compilerOptions: Record<string, unknown>;
+    };
     expect(tsconfig.compilerOptions.noUncheckedIndexedAccess).toBe(true);
     expect(tsconfig.compilerOptions.verbatimModuleSyntax).toBe(true);
   });

@@ -17,9 +17,7 @@ describe("GET /api/v1/questionnaire — I001 contract tests", () => {
   it("includes all 24 structured questions in canonical order", () => {
     const payload = buildQuestionnairePayload();
     expect(payload.structured).toHaveLength(24);
-    expect(payload.structured.map((q) => q.id)).toEqual(
-      STRUCTURED_QUESTIONS.map((q) => q.id),
-    );
+    expect(payload.structured.map((q) => q.id)).toEqual(STRUCTURED_QUESTIONS.map((q) => q.id));
   });
 
   it("includes both narrative exercises with field word caps", () => {

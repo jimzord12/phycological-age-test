@@ -3,7 +3,6 @@ import {
   classifyRules,
   classifySafety,
   selectHelpResources,
-  type SafetyDecision,
   type ProviderClassifier,
 } from "./safety-service";
 
@@ -323,7 +322,10 @@ describe("acceptance criteria", () => {
     expect(resources.length).toBeGreaterThan(0);
     // Resources contain international links/contacts, not a single country's services
     const hasInternational = resources.some(
-      (r) => r.name.includes("International") || r.description.includes("worldwide") || r.description.includes("countries")
+      (r) =>
+        r.name.includes("International") ||
+        r.description.includes("worldwide") ||
+        r.description.includes("countries"),
     );
     expect(hasInternational).toBe(true);
   });

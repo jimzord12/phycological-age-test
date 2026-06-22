@@ -14,6 +14,7 @@ within the same browser session, and never persist raw narrative text to `localS
 ## Scope
 
 **In:**
+
 - `AssessmentState` per PRD §18 (version, step index, structured answers, narrative drafts,
   consent, preferences, phase).
 - State container (React context or store) with debounced writes to `sessionStorage`.

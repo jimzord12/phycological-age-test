@@ -12,6 +12,7 @@ Defense-in-depth across the app surface (PRD §11). Model and user text are untr
 ## Scope
 
 **In:**
+
 - Strict Content Security Policy; HTTPS enforced in production.
 - Escape all user-generated and model-generated text on render; never render model output as
   raw HTML.

@@ -13,6 +13,7 @@ feedback during the quiz, and full keyboard support (PRD §7.3, §7.4, §9).
 ## Scope
 
 **In:**
+
 - Shell: `Step X of 26` progress (with screen-reader text), optional dimension label
   (never score direction), question text, semantic native radio options, the
   `Not applicable` option, Back/Continue, `Exit and delete current answers`.

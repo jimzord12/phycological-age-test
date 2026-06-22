@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { nextOnBack, nextOnContinue, toVisualStep } from "./_questionnaire-shell";
+import { nextOnBack, nextOnContinue, toVisualStep } from "./questionnaire-shell";
 
 // ---------------------------------------------------------------------------
 // toVisualStep

@@ -1,9 +1,5 @@
 import { describe, it, expect } from "vitest";
-import {
-  getBandLabel,
-  getGrowthAreas,
-  formatConfidenceReason,
-} from "./_results-screen";
+import { getBandLabel, getGrowthAreas, formatConfidenceReason } from "./results-screen";
 import type { DimensionResult } from "@/domain/result-types";
 import { DIMENSION_IDS, type DimensionId } from "@/domain/result-types";
 import type { ConfidenceReason } from "@/domain/result-types";

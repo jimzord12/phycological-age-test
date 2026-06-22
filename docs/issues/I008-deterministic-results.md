@@ -13,6 +13,7 @@ Deterministic results render immediately after `/score`, independent of any AI a
 ## Scope
 
 **In:**
+
 - Render: Structured Maturity Index (0–100) — or an "index unavailable / answer more items"
   state when `null` (DD-1); confidence label + concise reasons; five dimension cards or
   per-dimension `Insufficient data` state; profile-balance label; strongest dimension; one

@@ -13,6 +13,7 @@ Two optional narrative exercises placed mid-flow. Skipping must never feel punis
 ## Scope
 
 **In:**
+
 - Per-exercise UI: intro copy, separate text areas per sub-question, live word counts,
   warning at 80% of the field cap, hard cap that prevents extra input without deleting
   existing text, `Skip this exercise`, concise repeated privacy notice.

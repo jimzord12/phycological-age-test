@@ -13,6 +13,7 @@ verification (PRD §9, §21.4).
 ## Scope
 
 **In:**
+
 - Automated axe checks (e.g. `@axe-core/playwright`) on landing, consent, questionnaire,
   narrative, review, and results screens.
 - Verify: focus order, screen-reader labels, radio groups, error-summary announcements with

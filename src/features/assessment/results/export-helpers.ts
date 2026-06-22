@@ -1,4 +1,4 @@
-import type { ScoreResponse } from "@/app/api/v1/assessments/score/route";
+import type { ScoreResponse } from "@/contracts/scoring";
 import type { ConfidenceReason, DimensionId } from "@/domain/result-types";
 import { DIMENSION_IDS } from "@/domain/result-types";
 import { QUESTIONNAIRE_VERSION } from "@/domain/versions";

@@ -42,14 +42,14 @@ GLM endpoints are reachable via the SDK's configurable `baseURL`. See DD-5 for r
 
 ## Env vars
 
-| Variable | Required | Default | Notes |
-|---|---|---|---|
-| `AI_PROVIDER` | no | `none` | `anthropic` \| `openai` \| `none` |
-| `AI_MODEL` | if provider ≠ none | — | e.g. `glm-4-plus`, `claude-3-5-haiku-20241022` |
-| `ANTHROPIC_BASE_URL` | if `anthropic` | Anthropic default | Override for Z.AI: `https://api.z.ai/api/anthropic` |
-| `OPENAI_BASE_URL` | if `openai` | OpenAI default | Override for Z.AI: `https://api.z.ai/api/coding/paas/v4` |
-| `AI_API_KEY` | if provider ≠ none | — | Injected as the provider's API key |
-| `AI_TIMEOUT_MS` | no | `30000` | Request timeout in ms |
+| Variable             | Required           | Default           | Notes                                                    |
+| -------------------- | ------------------ | ----------------- | -------------------------------------------------------- |
+| `AI_PROVIDER`        | no                 | `none`            | `anthropic` \| `openai` \| `none`                        |
+| `AI_MODEL`           | if provider ≠ none | —                 | e.g. `glm-4-plus`, `claude-3-5-haiku-20241022`           |
+| `ANTHROPIC_BASE_URL` | if `anthropic`     | Anthropic default | Override for Z.AI: `https://api.z.ai/api/anthropic`      |
+| `OPENAI_BASE_URL`    | if `openai`        | OpenAI default    | Override for Z.AI: `https://api.z.ai/api/coding/paas/v4` |
+| `AI_API_KEY`         | if provider ≠ none | —                 | Injected as the provider's API key                       |
+| `AI_TIMEOUT_MS`      | no                 | `30000`           | Request timeout in ms                                    |
 
 ## Acceptance criteria
 

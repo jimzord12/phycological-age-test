@@ -1,12 +1,12 @@
 "use client";
 
 import { useAssessment } from "@/client/assessment-context";
-import { LandingScreen } from "./_landing-screen";
-import { ConsentScreen } from "./_consent-screen";
-import { QuestionnaireShell } from "./_questionnaire-shell";
-import { NarrativeShell } from "./_narrative-shell";
-import { ReviewScreen } from "./_review-screen";
-import { ResultsScreen } from "./_results-screen";
+import { LandingScreen } from "./screens/landing-screen";
+import { ConsentScreen } from "./screens/consent-screen";
+import { QuestionnaireShell } from "./questionnaire/questionnaire-shell";
+import { NarrativeShell } from "./questionnaire/narrative-shell";
+import { ReviewScreen } from "./questionnaire/review-screen";
+import { ResultsScreen } from "./results/results-screen";
 
 /** Routes to the correct screen based on phase and stepIndex. */
 export function HomeFlow() {

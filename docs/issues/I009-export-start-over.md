@@ -13,6 +13,7 @@ Users can keep a local copy of results and fully reset without leaving server-si
 ## Scope
 
 **In:**
+
 - Export: printable HTML result view and JSON download; optional PDF only if generated
   locally without sending data to a third party. Exports include version identifiers
   (questionnaire / scoring / prompt) and the disclaimer; decorative orbs absent from print.
