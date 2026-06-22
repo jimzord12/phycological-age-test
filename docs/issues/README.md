@@ -21,7 +21,7 @@ in the root [`PROGRESS.md`](../../PROGRESS.md).
 A (API):      I001 → I002
 B (client):   I003 → I004 → I005 → I006 → I007 → I008 → I009
 C (AI):       I010, I012 → I011
-D (cross):    I013, I014
+D (cross):    I013, I014, I019
 E (QA):       I016, I015, I017
 F (delivery): I018
 ```

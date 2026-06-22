@@ -83,9 +83,19 @@ no network, no I/O) so results are deterministic and testable.
   then run the size script (full routine in §6).
 - Document any necessary deviation as a new `DD-*` in `docs/DOMAIN-DECISIONS.md`.
 - **Prefer one branch per issue** — when starting a new issue, recommend creating a
-  dedicated branch (e.g. `feat/I003-client-state`) rather than piling work onto the current
-  branch. This keeps diffs reviewable and makes it easy to isolate or revert a single
-  issue. Not a hard rule — use judgment when issues are trivially small or tightly coupled.
+  dedicated branch rather than piling work onto the current branch. This keeps diffs
+  reviewable and makes it easy to isolate or revert a single issue. Not a hard rule —
+  use judgment when issues are trivially small or tightly coupled.
+- **Branch naming convention** — branch names **must** include the issue or task identifier
+  whenever one exists. Use the format `<type>/<identifier>-<short-slug>`, e.g.:
+  - `feat/I005-questionnaire-shell`
+  - `fix/I002-score-validation`
+  - `chore/I014-csp-headers`
+
+  Common types: `feat` (new feature/issue), `fix` (bug fix), `chore` (docs, config,
+  tooling), `refactor`. The identifier portion (`I001`–`I018`, or a task ID) is
+  **required** when the work is tied to a known issue; omit it only for truly ad-hoc
+  branches with no associated issue.
 
 **Don't**
 - Don't change question wording, answer order, score maps, formulas, rubric rules, or the
