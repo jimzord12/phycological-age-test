@@ -11,15 +11,15 @@ Last updated: 2026-06-22 (I011 ✅)
 
 ## Milestone overview
 
-| Phase | Theme | Status |
-| ----- | ----- | ------ |
-| 0 | Domain core: types, canonical bank, deterministic scoring + tests | ✅ done |
-| A | API foundation: questionnaire + score endpoints | ✅ done |
-| B | Client flow: consent → questionnaire → review → deterministic results | ✅ done |
-| C | AI layer: provider abstraction, analyze endpoint, safety service | ✅ done |
-| D | Cross-cutting: observability, rate limiting, security hardening, CI | ⬜ |
-| E | QA: E2E journeys, accessibility suite, AI evaluation set | ⬜ |
-| F | Delivery: privacy policy draft, threat model, deployment docs | ⬜ |
+| Phase | Theme                                                                 | Status  |
+| ----- | --------------------------------------------------------------------- | ------- |
+| 0     | Domain core: types, canonical bank, deterministic scoring + tests     | ✅ done |
+| A     | API foundation: questionnaire + score endpoints                       | ✅ done |
+| B     | Client flow: consent → questionnaire → review → deterministic results | ✅ done |
+| C     | AI layer: provider abstraction, analyze endpoint, safety service      | ✅ done |
+| D     | Cross-cutting: observability, rate limiting, security hardening, CI   | ⬜      |
+| E     | QA: E2E journeys, accessibility suite, AI evaluation set              | ⬜      |
+| F     | Delivery: privacy policy draft, threat model, deployment docs         | ⬜      |
 
 ---
 
@@ -43,27 +43,27 @@ Last updated: 2026-06-22 (I011 ✅)
 
 ## Remaining work → issues
 
-| Issue | Title | Phase | Depends on | Complexity |
-| ----- | ----- | ----- | ---------- | ---------- |
-| [I001](docs/issues/I001-questionnaire-api.md) | `GET /api/v1/questionnaire` (score-free) | A | Phase 0 | ✅ |
-| [I002](docs/issues/I002-score-api.md) | `POST /api/v1/assessments/score` + validation | A | Phase 0 | ✅ |
-| [I003](docs/issues/I003-client-state-persistence.md) | Client assessment state + session persistence | B | I001 | ✅ |
-| [I004](docs/issues/I004-landing-consent.md) | Landing + consent + eligibility/AI/age-metaphor choices | B | I003 | ✅ |
-| [I005](docs/issues/I005-questionnaire-shell.md) | Questionnaire shell + structured item UI (a11y) | B | I003 | ✅ |
-| [I006](docs/issues/I006-narrative-ui.md) | Narrative exercise UI (optional, word caps) | B | I005 | ✅ |
-| [I007](docs/issues/I007-review-screen.md) | Review screen | B | I005, I006 | ✅ |
-| [I008](docs/issues/I008-deterministic-results.md) | Deterministic results screen (text equivalents) | B | I002, I003 | ✅ |
-| [I009](docs/issues/I009-export-start-over.md) | Export (HTML/JSON) + start over | B | I008 | ✅ |
-| [I010](docs/issues/I010-ai-provider-abstraction.md) | Provider-agnostic AI abstraction + adapters | C | Phase 0 | ✅ |
-| [I011](docs/issues/I011-analyze-api.md) | `POST /api/v1/assessments/analyze` + strict schema | C | I002, I010, I012 | ✅ |
-| [I012](docs/issues/I012-safety-service.md) | Safety service + help-resource selection | C | Phase 0 | ✅ |
-| [I013](docs/issues/I013-observability-rate-limit.md) | Privacy-safe observability + rate limiting | D | I002 | 2 |
-| [I014](docs/issues/I014-security-hardening.md) | Security hardening (CSP, escaping, limits) | D | I002, I008 | 3 |
-| [I015](docs/issues/I015-e2e-tests.md) | E2E test journeys (Playwright) | E | I008, I009, I011 | 4 |
-| [I016](docs/issues/I016-accessibility-suite.md) | Accessibility test suite + audit | E | I008 | 3 |
-| [I017](docs/issues/I017-ai-eval-fixtures.md) | AI evaluation fixtures + harness | E | I011 | 3 |
-| [I018](docs/issues/I018-delivery-docs.md) | Privacy policy draft, threat model, deployment docs | F | — | 2 |
-| [I019](docs/issues/I019-ci-pipeline.md) | Minimal CI pipeline (GitHub Actions) | D | — | ✅ |
+| Issue                                                | Title                                                   | Phase | Depends on       | Complexity |
+| ---------------------------------------------------- | ------------------------------------------------------- | ----- | ---------------- | ---------- |
+| [I001](docs/issues/I001-questionnaire-api.md)        | `GET /api/v1/questionnaire` (score-free)                | A     | Phase 0          | ✅         |
+| [I002](docs/issues/I002-score-api.md)                | `POST /api/v1/assessments/score` + validation           | A     | Phase 0          | ✅         |
+| [I003](docs/issues/I003-client-state-persistence.md) | Client assessment state + session persistence           | B     | I001             | ✅         |
+| [I004](docs/issues/I004-landing-consent.md)          | Landing + consent + eligibility/AI/age-metaphor choices | B     | I003             | ✅         |
+| [I005](docs/issues/I005-questionnaire-shell.md)      | Questionnaire shell + structured item UI (a11y)         | B     | I003             | ✅         |
+| [I006](docs/issues/I006-narrative-ui.md)             | Narrative exercise UI (optional, word caps)             | B     | I005             | ✅         |
+| [I007](docs/issues/I007-review-screen.md)            | Review screen                                           | B     | I005, I006       | ✅         |
+| [I008](docs/issues/I008-deterministic-results.md)    | Deterministic results screen (text equivalents)         | B     | I002, I003       | ✅         |
+| [I009](docs/issues/I009-export-start-over.md)        | Export (HTML/JSON) + start over                         | B     | I008             | ✅         |
+| [I010](docs/issues/I010-ai-provider-abstraction.md)  | Provider-agnostic AI abstraction + adapters             | C     | Phase 0          | ✅         |
+| [I011](docs/issues/I011-analyze-api.md)              | `POST /api/v1/assessments/analyze` + strict schema      | C     | I002, I010, I012 | ✅         |
+| [I012](docs/issues/I012-safety-service.md)           | Safety service + help-resource selection                | C     | Phase 0          | ✅         |
+| [I013](docs/issues/I013-observability-rate-limit.md) | Privacy-safe observability + rate limiting              | D     | I002             | 2          |
+| [I014](docs/issues/I014-security-hardening.md)       | Security hardening (CSP, escaping, limits)              | D     | I002, I008       | 3          |
+| [I015](docs/issues/I015-e2e-tests.md)                | E2E test journeys (Playwright)                          | E     | I008, I009, I011 | 4          |
+| [I016](docs/issues/I016-accessibility-suite.md)      | Accessibility test suite + audit                        | E     | I008             | 3          |
+| [I017](docs/issues/I017-ai-eval-fixtures.md)         | AI evaluation fixtures + harness                        | E     | I011             | 3          |
+| [I018](docs/issues/I018-delivery-docs.md)            | Privacy policy draft, threat model, deployment docs     | F     | —                | 2          |
+| [I019](docs/issues/I019-ci-pipeline.md)              | Minimal CI pipeline (GitHub Actions)                    | D     | —                | ✅         |
 
 Complexity is 1–5 (per the project's complexity-rating convention). No item is rated 5;
 if one grows during implementation, decompose it before starting.

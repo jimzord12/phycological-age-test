@@ -7,7 +7,11 @@
  */
 
 import { STRUCTURED_QUESTIONS } from "@/domain/questionnaire";
-import type { DimensionId, DimensionResult, StructuredAssessmentResult } from "@/domain/result-types";
+import type {
+  DimensionId,
+  DimensionResult,
+  StructuredAssessmentResult,
+} from "@/domain/result-types";
 import { PROMPT_VERSION } from "@/domain/versions";
 
 // ---- Public types -----------------------------------------------------------
@@ -145,7 +149,9 @@ export function buildUserPrompt(
     if (optionId === undefined) continue;
     const option = question.options.find((o) => o.id === optionId);
     if (!option) continue;
-    lines.push(option.isNotApplicable ? `${question.id}: Not applicable` : `${question.id}: ${option.label}`);
+    lines.push(
+      option.isNotApplicable ? `${question.id}: Not applicable` : `${question.id}: ${option.label}`,
+    );
   }
 
   // --- Narrative exercises (untrusted user text, clearly delimited) ---

@@ -43,8 +43,7 @@ const N01_CONTENT = {
   fields: {
     event:
       "Last month I disagreed with my manager about how to prioritize the project work. I reacted by immediately arguing my case.",
-    selfStory:
-      "I felt my judgment was being ignored and I needed to prove my point was right.",
+    selfStory: "I felt my judgment was being ignored and I needed to prove my point was right.",
     newUnderstanding:
       "I now see that I could have asked more questions before defending my position so strongly.",
   },
@@ -214,7 +213,10 @@ describe("processAnalyzeRequest — not_scored", () => {
     const result = await processAnalyzeRequest({
       ...VALID_REQUEST,
       narrative: {
-        N01: { skipped: false, fields: { event: "a few words", selfStory: "", newUnderstanding: "" } },
+        N01: {
+          skipped: false,
+          fields: { event: "a few words", selfStory: "", newUnderstanding: "" },
+        },
         N02: { skipped: false, fields: { pattern: "a few words", contexts: "", unknown: "" } },
       },
     });

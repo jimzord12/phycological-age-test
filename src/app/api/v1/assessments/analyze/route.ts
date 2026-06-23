@@ -217,10 +217,7 @@ export async function processAnalyzeRequest(
 
 // ---- Internal helpers -------------------------------------------------------
 
-function combineNarrativeText(
-  n01: NarrativeExerciseInput,
-  n02: NarrativeExerciseInput,
-): string {
+function combineNarrativeText(n01: NarrativeExerciseInput, n02: NarrativeExerciseInput): string {
   const parts: string[] = [];
   if (n01 !== null && !n01.skipped) parts.push(...Object.values(n01.fields));
   if (n02 !== null && !n02.skipped) parts.push(...Object.values(n02.fields));

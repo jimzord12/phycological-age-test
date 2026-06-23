@@ -37,9 +37,7 @@ const PARTIAL_RESULT: StructuredAssessmentResult = {
   },
 };
 
-const SINGLE_ANSWER: PromptStructuredInput["answers"] = [
-  { questionId: "ER01", optionId: "C" },
-];
+const SINGLE_ANSWER: PromptStructuredInput["answers"] = [{ questionId: "ER01", optionId: "C" }];
 
 const FULL_NARRATIVE: PromptNarrativeInput = {
   N01: {

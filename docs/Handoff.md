@@ -27,6 +27,7 @@ _Last updated: 2026-06-22 (I011 landed)_
 - I007: Review screen — done.
 
 What exists today:
+
 - `src/domain/` — canonical bank (24 structured + 2 narrative), `scoreStructuredAssessment`,
   `calculateConfidence`, `calculateNarrativeScore`, `calculateAgeMetaphor`,
   `validateAnswerSet`, `getPublicQuestionnaire`.
