@@ -15,7 +15,8 @@
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage",
     "check": "pnpm format:check && pnpm lint && pnpm typecheck && pnpm test:coverage && pnpm build",
-    "knowledge:size": "bash scripts/check-knowledge-size.sh"
+    "knowledge:size": "bash scripts/check-knowledge-size.sh",
+    "prepare": "husky"
   },
   "dependencies": {
     "@ai-sdk/anthropic": "^3.0.85",
@@ -27,16 +28,33 @@
     "zod": "^4.4.3"
   },
   "devDependencies": {
+    "@commitlint/cli": "^21.0.2",
+    "@commitlint/config-conventional": "^21.0.2",
     "@types/node": "^25",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "@vitest/coverage-v8": "^4.1.9",
     "eslint": "^9.39.4",
     "eslint-config-next": "^16.2.9",
+    "husky": "^9.1.7",
     "jsdom": "^29.1.1",
+    "lint-staged": "^17.0.8",
     "prettier": "^3.8.4",
     "typescript": "5.9.3",
     "vitest": "^4.1.7"
+  },
+  "lint-staged": {
+    "*.{ts,tsx}": [
+      "prettier --write",
+      "eslint --max-warnings=0 --fix"
+    ],
+    "*.{js,mjs,cjs,jsx}": [
+      "prettier --write",
+      "eslint --max-warnings=0 --fix"
+    ],
+    "*.{json,css,md}": [
+      "prettier --write"
+    ]
   },
   "engines": {
     "node": ">=22"
