@@ -1,6 +1,6 @@
 # I011 — `POST /api/v1/assessments/analyze` + strict output schema
 
-- **Status:** ⬜ not started
+- **Status:** ✅ done
 - **Phase:** C (AI layer)
 - **Depends on:** I002, I010, I012
 - **Complexity:** 4

@@ -5,21 +5,21 @@ maps remaining work to the self-contained issues in [`docs/issues/`](docs/issues
 
 **Legend:** ✅ done · 🟡 in progress · ⬜ not started
 
-Last updated: 2026-06-22 (documentation audit; I012 remains the latest completed issue)
+Last updated: 2026-06-22 (I011 ✅)
 
 ---
 
 ## Milestone overview
 
-| Phase | Theme                                                                 | Status         |
-| ----- | --------------------------------------------------------------------- | -------------- |
-| 0     | Domain core: types, canonical bank, deterministic scoring + tests     | ✅ done        |
-| A     | API foundation: questionnaire + score endpoints                       | ✅ done        |
-| B     | Client flow: consent → questionnaire → review → deterministic results | ✅ done        |
-| C     | AI layer: provider abstraction, analyze endpoint, safety service      | 🟡 in progress |
-| D     | Cross-cutting: observability, rate limiting, security hardening, CI   | ⬜             |
-| E     | QA: E2E journeys, accessibility suite, AI evaluation set              | ⬜             |
-| F     | Delivery: privacy policy draft, threat model, deployment docs         | ⬜             |
+| Phase | Theme                                                                 | Status  |
+| ----- | --------------------------------------------------------------------- | ------- |
+| 0     | Domain core: types, canonical bank, deterministic scoring + tests     | ✅ done |
+| A     | API foundation: questionnaire + score endpoints                       | ✅ done |
+| B     | Client flow: consent → questionnaire → review → deterministic results | ✅ done |
+| C     | AI layer: provider abstraction, analyze endpoint, safety service      | ✅ done |
+| D     | Cross-cutting: observability, rate limiting, security hardening, CI   | ⬜      |
+| E     | QA: E2E journeys, accessibility suite, AI evaluation set              | ⬜      |
+| F     | Delivery: privacy policy draft, threat model, deployment docs         | ⬜      |
 
 ---
 
@@ -55,7 +55,7 @@ Last updated: 2026-06-22 (documentation audit; I012 remains the latest completed
 | [I008](docs/issues/I008-deterministic-results.md)    | Deterministic results screen (text equivalents)         | B     | I002, I003       | ✅         |
 | [I009](docs/issues/I009-export-start-over.md)        | Export (HTML/JSON) + start over                         | B     | I008             | ✅         |
 | [I010](docs/issues/I010-ai-provider-abstraction.md)  | Provider-agnostic AI abstraction + adapters             | C     | Phase 0          | ✅         |
-| [I011](docs/issues/I011-analyze-api.md)              | `POST /api/v1/assessments/analyze` + strict schema      | C     | I002, I010, I012 | 4          |
+| [I011](docs/issues/I011-analyze-api.md)              | `POST /api/v1/assessments/analyze` + strict schema      | C     | I002, I010, I012 | ✅         |
 | [I012](docs/issues/I012-safety-service.md)           | Safety service + help-resource selection                | C     | Phase 0          | ✅         |
 | [I013](docs/issues/I013-observability-rate-limit.md) | Privacy-safe observability + rate limiting              | D     | I002             | 2          |
 | [I014](docs/issues/I014-security-hardening.md)       | Security hardening (CSP, escaping, limits)              | D     | I002, I008       | 3          |
