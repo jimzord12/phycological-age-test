@@ -8,13 +8,13 @@ Update this file at the end of your session (replace stale "what's next" with re
 > the **top** of this file. If you see one, your first action is to compress/distill
 > KNOWLEDGE.md before anything else.
 
-_Last updated: 2026-06-22 (I011 landed)_
+_Last updated: 2026-06-23 (I013 landed)_
 
 ---
 
 ## Where things stand
 
-**Phase 0, Phase A, Phase B (I001–I009), I010, I011, and I012 are complete (Phase C done). 364 tests pass.**
+**Phase 0, Phase A, Phase B (I001–I009), I010, I011, I012, and I013 are complete (Phase C done; I013 starts Phase D). 400 tests pass.**
 
 - Phase 0: pure domain layer — canonical bank, scoring, confidence, narrative scoring.
 - I001: `GET /api/v1/questionnaire` (score-free, Zod-validated, cached).
@@ -150,22 +150,46 @@ What exists today:
   - 37 unit tests in `src/app/api/v1/assessments/analyze/route.test.ts`.
   - `AnalysisOutputSchema` in I010 now also validates excerpt ≤ 24 words.
 
-What does **not** exist yet: observability, rate limiting (I013), security hardening (I014), E2E/a11y tests, AI eval fixtures.
+- **`src/server/observability.ts`** (I013): structured, privacy-safe event logging:
+  - `EventName` union covers all 9 events: `questionnaire_loaded`, `score_requested`,
+    `score_completed`, `score_rejected`, `analysis_requested`, `analysis_completed`,
+    `analysis_unavailable`, `safety_interruption`, `export_generated`.
+  - `StructuredEvent` fields: `event`, `requestId`, `ts`, optional `questionnaireVersion`,
+    `scoringVersion`, `promptVersion`, `status`, `latencyMs`, `errorCode`, `appVersion`.
+  - `emitEvent()` emits newline-delimited JSON to stdout.
+  - `scrub()` redacts known sensitive keys (answers, narrative, prompt, apiKey, etc.) from
+    arbitrary objects before they reach any log path.
+  - `newRequestId()` returns a UUID for per-request correlation.
+  - All three API routes now emit appropriate events with latency timing.
+  - 18 unit tests in `src/server/observability.test.ts`.
+
+- **`src/server/rate-limit.ts`** (I013): privacy-preserving in-memory rate limiter:
+  - Score endpoint: 10 req / 60 s per client key.
+  - Analyze endpoint: 5 req / 60 s per client key.
+  - `extractClientKey()` truncates IPv4 to /24 prefix, IPv6/other to ≤ 19 chars — full IP
+    is never stored or logged.
+  - `checkScoreLimit()` / `checkAnalyzeLimit()` return `{ ok: true }` or
+    `{ ok: false; retryAfterMs: number }`.
+  - Gated by `RATE_LIMIT_ENABLED` env var (default `true`; set to `false` to disable).
+  - 429 responses include a `Retry-After` header (seconds).
+  - Lazy eviction prevents unbounded store growth without a background timer.
+  - 18 unit tests in `src/server/rate-limit.test.ts`.
+
+What does **not** exist yet: security hardening (I014), E2E/a11y tests, AI eval fixtures.
 
 ## Git / environment
 
-- Repo: `jimzord12/phycological-age-test`. Working branch: `claude/bold-babbage-fsfl6p`.
+- Repo: `jimzord12/phycological-age-test`. Working branch: `claude/eager-cori-4pg5mx`.
 - `pnpm install` → `pnpm test` / `pnpm typecheck` / `pnpm build`. Node ≥ 22.
 - `jsdom` is a devDependency (I003). Use `// @vitest-environment jsdom` for DOM test files.
 
 ## Recommended next steps
 
-1. **I013** (observability + rate limiting) or **I014** (security hardening) — both are Phase D
-   and have no remaining blockers. I013 is simpler (S tier); I014 is medium (M tier).
-   Either is a good next step now that Phase C is complete.
+1. **I014** (security hardening — CSP headers, escaping audit, request-size limits) — Phase D,
+   M tier, no remaining blockers.
 
 2. **I015** (E2E test journeys, Playwright) — depends on I011 being done ✅, now unblocked.
-   XL tier; may warrant its own branch.
+   XL tier; warrants its own branch.
 
 ## Things to keep in mind (gotchas → see KNOWLEDGE.md for detail)
 

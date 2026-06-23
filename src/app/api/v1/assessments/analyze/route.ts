@@ -11,6 +11,8 @@
 
 import { type NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
+import { emitEvent, newRequestId } from "@/server/observability";
+import { checkAnalyzeLimit, extractClientKey } from "@/server/rate-limit";
 import { scoreStructuredAssessment, validateAnswerSet } from "@/domain/scoring";
 import {
   calculateNarrativeScore,
@@ -227,7 +229,17 @@ function combineNarrativeText(n01: NarrativeExerciseInput, n02: NarrativeExercis
 // ---- Route handler ----------------------------------------------------------
 
 export async function POST(request: NextRequest): Promise<NextResponse> {
-  // Rate-limiting hook point (I013): insert middleware call here before parsing.
+  const rateLimit = checkAnalyzeLimit(extractClientKey(request.headers));
+  if (!rateLimit.ok) {
+    return NextResponse.json(
+      { code: "RATE_LIMITED", retryAfterMs: rateLimit.retryAfterMs },
+      { status: 429, headers: { "Retry-After": String(Math.ceil(rateLimit.retryAfterMs / 1000)) } },
+    );
+  }
+
+  const requestId = newRequestId();
+  emitEvent({ event: "analysis_requested", requestId });
+  const startMs = Date.now();
 
   const contentLength = request.headers.get("content-length");
   if (contentLength !== null && Number(contentLength) > MAX_BODY_BYTES) {
@@ -263,10 +275,33 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
   }
 
   const result = await processAnalyzeRequest(parsed.data);
+  const latencyMs = Date.now() - startMs;
 
   if (!result.ok) {
     return NextResponse.json(result.body, { status: result.status });
   }
 
-  return NextResponse.json(result.payload);
+  const { payload } = result;
+
+  if (payload.status === "completed" || payload.status === "not_scored") {
+    emitEvent({
+      event: "analysis_completed",
+      requestId,
+      latencyMs,
+      questionnaireVersion: parsed.data.questionnaireVersion,
+      promptVersion: payload.status === "completed" ? payload.promptVersion : undefined,
+      status: payload.status,
+    });
+  } else if (payload.status === "safety_interruption") {
+    emitEvent({ event: "safety_interruption", requestId, latencyMs });
+  } else {
+    emitEvent({
+      event: "analysis_unavailable",
+      requestId,
+      latencyMs,
+      errorCode: payload.reason,
+    });
+  }
+
+  return NextResponse.json(payload);
 }
