@@ -1,4 +1,10 @@
-import { generateObject, zodSchema, APICallError, NoObjectGeneratedError, TypeValidationError } from "ai";
+import {
+  generateObject,
+  zodSchema,
+  APICallError,
+  NoObjectGeneratedError,
+  TypeValidationError,
+} from "ai";
 import { createAnthropic } from "@ai-sdk/anthropic";
 import { createOpenAI } from "@ai-sdk/openai";
 import { z } from "zod";
@@ -19,7 +25,7 @@ export const AnalysisOutputSchema = z.object({
       z.object({
         text: z.string().min(1),
         evidence: z.string().min(1),
-      })
+      }),
     )
     .min(3)
     .max(5),
@@ -27,7 +33,7 @@ export const AnalysisOutputSchema = z.object({
     .array(
       z.object({
         text: z.string().min(1),
-      })
+      }),
     )
     .min(2)
     .max(3),
@@ -105,9 +111,7 @@ function buildModel(kind: "anthropic" | "openai") {
  * With AI_PROVIDER=none (the default), returns { status: "disabled" } so the
  * deterministic flow is never blocked.
  */
-export async function analyze(
-  input: AnalysisProviderInput
-): Promise<AnalysisProviderResult> {
+export async function analyze(input: AnalysisProviderInput): Promise<AnalysisProviderResult> {
   const providerKind = getProviderKind();
   if (providerKind === "none") {
     return { status: "disabled" };
@@ -140,10 +144,7 @@ function classifyError(err: unknown): AnalysisProviderResult {
   if (err instanceof NoObjectGeneratedError || err instanceof TypeValidationError) {
     return { status: "error", reason: "invalid_output" };
   }
-  if (
-    err instanceof Error &&
-    (err.name === "AbortError" || err.name === "TimeoutError")
-  ) {
+  if (err instanceof Error && (err.name === "AbortError" || err.name === "TimeoutError")) {
     return { status: "error", reason: "timeout" };
   }
   return { status: "error", reason: "provider_error" };

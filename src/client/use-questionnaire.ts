@@ -9,7 +9,7 @@
  */
 
 import { useEffect, useRef, useState } from "react";
-import type { QuestionnaireResponse } from "@/app/api/v1/questionnaire/route";
+import type { QuestionnaireResponse } from "@/contracts/questionnaire";
 
 type FetchState =
   | { status: "loading" }
@@ -27,6 +27,7 @@ export function useQuestionnaire() {
 
   useEffect(() => {
     if (moduleCache) {
+      // Another hook instance may populate the shared cache between render and this effect.
       setFetchState({ status: "ready", data: moduleCache });
       return;
     }

@@ -100,6 +100,7 @@ export function AssessmentProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     const stored = loadAssessmentDraft();
     if (stored && isVersionMismatch(stored, QUESTIONNAIRE_VERSION)) {
+      // Storage is client-only, so this post-hydration synchronization is intentional.
       setStorageStatus({ status: "mismatch", storedState: stored });
     } else {
       setStorageStatus({ status: "ready" });

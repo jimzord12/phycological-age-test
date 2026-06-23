@@ -4,12 +4,7 @@
  */
 
 /** Finite phases of the assessment flow (PRD §18). */
-export type AssessmentPhase =
-  | "consent"
-  | "questionnaire"
-  | "narrative"
-  | "review"
-  | "submitted";
+export type AssessmentPhase = "consent" | "questionnaire" | "narrative" | "review" | "submitted";
 
 /**
  * Legal/eligibility consent (PRD §7.3, §18).

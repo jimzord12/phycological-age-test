@@ -14,6 +14,7 @@ client-calculated score (PRD §11, §17). The domain provides `validateAnswerSet
 ## Scope
 
 **In:**
+
 - Route handler `src/app/api/v1/assessments/score/route.ts`.
 - Zod request validation: content type, payload shape, `questionnaireVersion`, answers
   (known item IDs, known option IDs, no duplicates), `preferences.includeAgeMetaphor`.

@@ -14,6 +14,7 @@ Narrative Self-Awareness score in application code — the model never decides i
 ## Scope
 
 **In:**
+
 - Route `src/app/api/v1/assessments/analyze/route.ts` implementing the PRD §14.3 server
   behavior: revalidate structured answers, recompute deterministic results, validate
   narrative word limits server-side, run safety screening (I012), build a **minimized**

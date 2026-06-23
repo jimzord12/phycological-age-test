@@ -63,20 +63,40 @@ describe("assessmentReducer", () => {
   });
 
   it("SET_ANSWER overwrites an existing answer for the same question", () => {
-    const with1 = assessmentReducer(base, { type: "SET_ANSWER", questionId: "ER01", optionId: "C" });
-    const with2 = assessmentReducer(with1, { type: "SET_ANSWER", questionId: "ER01", optionId: "A" });
+    const with1 = assessmentReducer(base, {
+      type: "SET_ANSWER",
+      questionId: "ER01",
+      optionId: "C",
+    });
+    const with2 = assessmentReducer(with1, {
+      type: "SET_ANSWER",
+      questionId: "ER01",
+      optionId: "A",
+    });
     expect(with2.structuredAnswers["ER01"]).toBe("A");
   });
 
   it("SET_ANSWER does not remove other answers", () => {
-    const with1 = assessmentReducer(base, { type: "SET_ANSWER", questionId: "ER01", optionId: "C" });
-    const with2 = assessmentReducer(with1, { type: "SET_ANSWER", questionId: "IC01", optionId: "B" });
+    const with1 = assessmentReducer(base, {
+      type: "SET_ANSWER",
+      questionId: "ER01",
+      optionId: "C",
+    });
+    const with2 = assessmentReducer(with1, {
+      type: "SET_ANSWER",
+      questionId: "IC01",
+      optionId: "B",
+    });
     expect(with2.structuredAnswers["ER01"]).toBe("C");
     expect(with2.structuredAnswers["IC01"]).toBe("B");
   });
 
   it("CLEAR_ANSWER removes a specific answer", () => {
-    const withAnswer = assessmentReducer(base, { type: "SET_ANSWER", questionId: "ER01", optionId: "C" });
+    const withAnswer = assessmentReducer(base, {
+      type: "SET_ANSWER",
+      questionId: "ER01",
+      optionId: "C",
+    });
     const next = assessmentReducer(withAnswer, { type: "CLEAR_ANSWER", questionId: "ER01" });
     expect(next.structuredAnswers["ER01"]).toBeUndefined();
   });
@@ -157,7 +177,11 @@ describe("assessmentReducer", () => {
   });
 
   it("RESTORE replaces the entire state", () => {
-    const withData = assessmentReducer(base, { type: "SET_ANSWER", questionId: "ER01", optionId: "C" });
+    const withData = assessmentReducer(base, {
+      type: "SET_ANSWER",
+      questionId: "ER01",
+      optionId: "C",
+    });
     const target = makeInitialState("RMP-2.0");
     const next = assessmentReducer(withData, { type: "RESTORE", state: target });
     expect(next.questionnaireVersion).toBe("RMP-2.0");
@@ -165,7 +189,11 @@ describe("assessmentReducer", () => {
   });
 
   it("DISCARD resets to a fresh state with the new version", () => {
-    const withData = assessmentReducer(base, { type: "SET_ANSWER", questionId: "ER01", optionId: "C" });
+    const withData = assessmentReducer(base, {
+      type: "SET_ANSWER",
+      questionId: "ER01",
+      optionId: "C",
+    });
     const next = assessmentReducer(withData, { type: "DISCARD", newVersion: "RMP-1.1" });
     expect(next.questionnaireVersion).toBe("RMP-1.1");
     expect(next.structuredAnswers).toEqual({});
@@ -175,9 +203,7 @@ describe("assessmentReducer", () => {
 
   it("reducer does not mutate the input state", () => {
     const frozen = Object.freeze(base) as AssessmentState;
-    expect(() =>
-      assessmentReducer(frozen, { type: "SET_STEP", stepIndex: 3 }),
-    ).not.toThrow();
+    expect(() => assessmentReducer(frozen, { type: "SET_STEP", stepIndex: 3 })).not.toThrow();
     expect(frozen.stepIndex).toBe(0);
   });
 });

@@ -90,7 +90,9 @@ export function NarrativeShell() {
           <span aria-hidden="true" style={{ color: "var(--text-muted)", fontSize: "0.8125rem" }}>
             Step {visualStep} of 26
           </span>
-          <span style={{ color: "var(--text-muted)", fontSize: "0.75rem", letterSpacing: "0.03em" }}>
+          <span
+            style={{ color: "var(--text-muted)", fontSize: "0.75rem", letterSpacing: "0.03em" }}
+          >
             Reflection
           </span>
         </div>
@@ -238,8 +240,8 @@ export function NarrativeShell() {
           border: "1px solid var(--border)",
         }}
       >
-        Your responses are stored only in this browser session and are never sent to our
-        servers unless you choose to include an AI analysis.
+        Your responses are stored only in this browser session and are never sent to our servers
+        unless you choose to include an AI analysis.
       </p>
 
       {/* Navigation */}

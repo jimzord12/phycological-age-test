@@ -1,4 +1,4 @@
-import { HomeFlow } from "./_home-flow";
+import { HomeFlow } from "@/features/assessment/home-flow";
 
 export default function Home() {
   return <HomeFlow />;

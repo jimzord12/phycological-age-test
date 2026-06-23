@@ -14,6 +14,7 @@ privacy-preserving controls.
 ## Scope
 
 **In:**
+
 - Structured event logging: `questionnaire_loaded`, `score_requested`, `score_completed`,
   `score_rejected`, `analysis_requested`, `analysis_completed`, `analysis_unavailable`,
   `safety_interruption`, `export_generated`; fields limited to request ID, versions, status,

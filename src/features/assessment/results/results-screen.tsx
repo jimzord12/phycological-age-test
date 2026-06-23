@@ -2,14 +2,14 @@
 
 import { useEffect, useRef, useState } from "react";
 import { useAssessment } from "@/client/assessment-context";
-import type { ScoreResponse } from "@/app/api/v1/assessments/score/route";
+import type { ScoreResponse } from "@/contracts/scoring";
 import {
   buildExportPayload,
   buildJsonExport,
   buildHtmlExport,
   triggerDownload,
   exportDateStamp,
-} from "./_export-helpers";
+} from "./export-helpers";
 import {
   DIMENSION_IDS,
   type DimensionId,
@@ -47,9 +47,7 @@ export type GrowthAreas = {
 };
 
 /** Identifies the highest-scoring and lower-scoring reportable dimensions (DOMAIN §12.3). */
-export function getGrowthAreas(
-  dimensions: Record<DimensionId, DimensionResult>,
-): GrowthAreas {
+export function getGrowthAreas(dimensions: Record<DimensionId, DimensionResult>): GrowthAreas {
   const reportable = DIMENSION_IDS.filter((d) => dimensions[d]!.status === "reportable");
   if (reportable.length === 0) return { strongest: null, growth: [] };
 
@@ -102,13 +100,7 @@ function SectionHeading({ children }: { children: React.ReactNode }) {
   );
 }
 
-function Card({
-  children,
-  style,
-}: {
-  children: React.ReactNode;
-  style?: React.CSSProperties;
-}) {
+function Card({ children, style }: { children: React.ReactNode; style?: React.CSSProperties }) {
   return (
     <div
       style={{
@@ -150,13 +142,7 @@ function ScoreBar({ score }: { score: number }) {
   );
 }
 
-function DimensionCard({
-  dimId,
-  result,
-}: {
-  dimId: DimensionId;
-  result: DimensionResult;
-}) {
+function DimensionCard({ dimId, result }: { dimId: DimensionId; result: DimensionResult }) {
   const label = DIMENSION_LABELS[dimId];
   if (result.status === "insufficient_data") {
     const needed = result.required - result.answered;
@@ -177,8 +163,8 @@ function DimensionCard({
             color: "var(--text-secondary)",
           }}
         >
-          Answer at least {needed} more item{needed === 1 ? "" : "s"} to generate a score for
-          this dimension ({result.answered} of {result.required} required answered so far).
+          Answer at least {needed} more item{needed === 1 ? "" : "s"} to generate a score for this
+          dimension ({result.answered} of {result.required} required answered so far).
         </p>
       </Card>
     );
@@ -343,8 +329,7 @@ export function ResultsScreen() {
   }
 
   const { result } = scoreState.data;
-  const { dimensions, structuredMaturityIndex, profileBalance, confidence, ageMetaphor } =
-    result;
+  const { dimensions, structuredMaturityIndex, profileBalance, confidence, ageMetaphor } = result;
   const { strongest, growth } = getGrowthAreas(dimensions);
 
   return (
@@ -363,9 +348,9 @@ export function ResultsScreen() {
           lineHeight: 1.5,
         }}
       >
-        <strong>Not a clinical tool.</strong> This profile reflects self-reported behavior
-        patterns in a voluntary assessment. It is not a psychological diagnosis, a measure of
-        mental health, or a professional evaluation of any kind.
+        <strong>Not a clinical tool.</strong> This profile reflects self-reported behavior patterns
+        in a voluntary assessment. It is not a psychological diagnosis, a measure of mental health,
+        or a professional evaluation of any kind.
       </p>
 
       {/* Page heading */}
@@ -428,8 +413,8 @@ export function ResultsScreen() {
                 Index unavailable
               </p>
               <p style={{ margin: 0, fontSize: "0.875rem", color: "var(--text-muted)" }}>
-                The overall index requires all five dimensions to be reportable. Answer more
-                items in the dimensions marked "Insufficient data" below to unlock it.
+                The overall index requires all five dimensions to be reportable. Answer more items
+                in the dimensions marked &quot;Insufficient data&quot; below to unlock it.
               </p>
             </>
           )}
@@ -600,10 +585,10 @@ export function ResultsScreen() {
                 lineHeight: 1.6,
               }}
             >
-              This number is a rough metaphor for the maturity level reflected in your
-              responses — it is not your chronological age, a clinical measure, or a literal
-              psychological age. The scale runs from 16 to 72 and corresponds to your overall
-              index on a continuous range.
+              This number is a rough metaphor for the maturity level reflected in your responses —
+              it is not your chronological age, a clinical measure, or a literal psychological age.
+              The scale runs from 16 to 72 and corresponds to your overall index on a continuous
+              range.
             </p>
           </Card>
         </section>

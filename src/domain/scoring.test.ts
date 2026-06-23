@@ -127,7 +127,9 @@ describe("scoreStructuredAssessment", () => {
 });
 
 describe("calculateProfileBalance", () => {
-  function dims(values: Partial<Record<DimensionId, number>>): Record<DimensionId, DimensionResult> {
+  function dims(
+    values: Partial<Record<DimensionId, number>>,
+  ): Record<DimensionId, DimensionResult> {
     const base = {} as Record<DimensionId, DimensionResult>;
     for (const d of ["ER", "IC", "PT", "IS", "TD"] as DimensionId[]) {
       const score = values[d];
