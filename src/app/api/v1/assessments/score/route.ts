@@ -98,6 +98,11 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
   emitEvent({ event: "score_requested", requestId });
   const startMs = Date.now();
 
+  const contentType = request.headers.get("content-type");
+  if (!contentType?.includes("application/json")) {
+    return NextResponse.json({ code: "UNSUPPORTED_MEDIA_TYPE" }, { status: 415 });
+  }
+
   const contentLength = request.headers.get("content-length");
   if (contentLength !== null && Number(contentLength) > MAX_BODY_BYTES) {
     return NextResponse.json({ code: "REQUEST_TOO_LARGE" }, { status: 413 });

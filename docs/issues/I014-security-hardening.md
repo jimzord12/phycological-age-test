@@ -1,6 +1,6 @@
 # I014 — Security hardening (CSP, escaping, limits)
 
-- **Status:** ⬜ not started
+- **Status:** ✅ done
 - **Phase:** D (cross-cutting)
 - **Depends on:** I002, I008
 - **Complexity:** 3
@@ -28,10 +28,10 @@ and tests).
 
 ## Acceptance criteria
 
-- [ ] CSP active; user/model text escaped; model output never rendered as HTML.
-- [ ] Server validates payloads and word limits; rejects unknown/duplicate answers.
-- [ ] Request-size limits enforced; dependency scan + lockfile wired in CI.
-- [ ] No provider secret in any client artifact (verified by test/scan).
+- [x] CSP active; user/model text escaped; model output never rendered as HTML.
+- [x] Server validates payloads and word limits; rejects unknown/duplicate answers.
+- [x] Request-size limits enforced; dependency scan + lockfile wired in CI.
+- [x] No provider secret in any client artifact (verified by test/scan).
 - [ ] Injected HTML/script in narrative is shown escaped (E2E covered in I015).
 
 ## References

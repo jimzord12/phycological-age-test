@@ -8,13 +8,13 @@ Update this file at the end of your session (replace stale "what's next" with re
 > the **top** of this file. If you see one, your first action is to compress/distill
 > KNOWLEDGE.md before anything else.
 
-_Last updated: 2026-06-23 (I013 landed)_
+_Last updated: 2026-06-23 (I014 landed)_
 
 ---
 
 ## Where things stand
 
-**Phase 0, Phase A, Phase B (I001–I009), I010, I011, I012, and I013 are complete (Phase C done; I013 starts Phase D). 400 tests pass.**
+**Phase 0, Phase A, Phase B (I001–I009), I010, I011, I012, I013, and I014 are complete (Phases C and D done). 416 tests pass.**
 
 - Phase 0: pure domain layer — canonical bank, scoring, confidence, narrative scoring.
 - I001: `GET /api/v1/questionnaire` (score-free, Zod-validated, cached).
@@ -175,7 +175,21 @@ What exists today:
   - Lazy eviction prevents unbounded store growth without a background timer.
   - 18 unit tests in `src/server/rate-limit.test.ts`.
 
-What does **not** exist yet: security hardening (I014), E2E/a11y tests, AI eval fixtures.
+- **`next.config.ts`** (I014): security headers applied to all routes:
+  - CSP: `default-src 'self'`; `script-src 'self' 'unsafe-inline'` (required by Next.js App Router
+    hydration); `style-src 'self' 'unsafe-inline'` (inline styles used throughout); `connect-src
+'self'`; `object-src 'none'`; `frame-ancestors 'none'`; `base-uri 'self'`; `form-action 'self'`.
+  - `X-Frame-Options: DENY`, `X-Content-Type-Options: nosniff`, `Referrer-Policy`,
+    `Permissions-Policy` (camera/mic/geolocation disabled).
+  - `SECURITY_HEADERS` and `CSP_DIRECTIVES` exported from `next.config.ts` for testability.
+- **API routes** (I014): both `/assessments/score` and `/assessments/analyze` now return 415
+  `UNSUPPORTED_MEDIA_TYPE` when `Content-Type` is not `application/json`.
+- **CI** (I014): `pnpm audit --prod` added to `.github/workflows/ci.yml` after `pnpm check`.
+- **`src/server/security.test.ts`** (I014): 16 tests covering CSP directives, security headers,
+  Content-Type enforcement on both API routes, and absence of `NEXT_PUBLIC_`-prefixed env vars
+  in `ai-provider.ts`.
+
+What does **not** exist yet: E2E/a11y tests (I015, I016), AI eval fixtures (I017).
 
 ## Git / environment
 
@@ -185,11 +199,13 @@ What does **not** exist yet: security hardening (I014), E2E/a11y tests, AI eval 
 
 ## Recommended next steps
 
-1. **I014** (security hardening — CSP headers, escaping audit, request-size limits) — Phase D,
-   M tier, no remaining blockers.
+1. **I015** (E2E test journeys, Playwright) — XL tier; depends on I011 ✅. Warrants its own branch.
 
-2. **I015** (E2E test journeys, Playwright) — depends on I011 being done ✅, now unblocked.
-   XL tier; warrants its own branch.
+2. **I016** (accessibility test suite + audit) — M tier; depends on I008 ✅.
+
+3. **I017** (AI evaluation fixtures + harness) — M tier; depends on I011 ✅.
+
+4. **I018** (delivery docs — privacy policy draft, threat model, deploy guide) — XS tier; no blockers.
 
 ## Things to keep in mind (gotchas → see KNOWLEDGE.md for detail)
 
