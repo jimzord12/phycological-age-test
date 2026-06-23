@@ -15,6 +15,8 @@ import type {
 } from "@/domain/result-types";
 import type { ScoringVersion } from "@/domain/versions";
 import type { DimensionId } from "@/domain/result-types";
+import { emitEvent, newRequestId } from "@/server/observability";
+import { checkScoreLimit, extractClientKey } from "@/server/rate-limit";
 
 const MAX_BODY_BYTES = 16_384; // 16 KB — far exceeds any valid 24-answer payload
 
@@ -84,7 +86,17 @@ export function processScoreRequest(input: ScoreRequestInput): ScoreSuccess | Sc
 // --- Route handler ---
 
 export async function POST(request: NextRequest): Promise<NextResponse> {
-  // Rate-limiting hook point (I013): insert middleware call here before parsing.
+  const rateLimit = checkScoreLimit(extractClientKey(request.headers));
+  if (!rateLimit.ok) {
+    return NextResponse.json(
+      { code: "RATE_LIMITED", retryAfterMs: rateLimit.retryAfterMs },
+      { status: 429, headers: { "Retry-After": String(Math.ceil(rateLimit.retryAfterMs / 1000)) } },
+    );
+  }
+
+  const requestId = newRequestId();
+  emitEvent({ event: "score_requested", requestId });
+  const startMs = Date.now();
 
   const contentLength = request.headers.get("content-length");
   if (contentLength !== null && Number(contentLength) > MAX_BODY_BYTES) {
@@ -120,9 +132,25 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
   }
 
   const result = processScoreRequest(parsed.data);
+  const latencyMs = Date.now() - startMs;
+
   if (!result.ok) {
+    emitEvent({
+      event: "score_rejected",
+      requestId,
+      latencyMs,
+      questionnaireVersion: parsed.data.questionnaireVersion,
+      errorCode: "INVALID_ANSWER_SET",
+    });
     return NextResponse.json(result.body, { status: result.status });
   }
 
+  emitEvent({
+    event: "score_completed",
+    requestId,
+    latencyMs,
+    questionnaireVersion: parsed.data.questionnaireVersion,
+    scoringVersion: result.payload.result.scoringVersion,
+  });
   return NextResponse.json(result.payload);
 }

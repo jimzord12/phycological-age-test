@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { QuestionnaireResponseSchema, type QuestionnaireResponse } from "@/contracts/questionnaire";
 import { getPublicQuestionnaire } from "@/domain/questionnaire";
 import { SCORING_VERSION } from "@/domain/versions";
+import { emitEvent, newRequestId } from "@/server/observability";
 
 export { QuestionnaireResponseSchema } from "@/contracts/questionnaire";
 
@@ -19,6 +20,7 @@ export function buildQuestionnairePayload(): QuestionnaireResponse {
 // --- Route handler -----------------------------------------------------------
 
 export function GET(): NextResponse {
+  emitEvent({ event: "questionnaire_loaded", requestId: newRequestId() });
   const payload = buildQuestionnairePayload();
   return NextResponse.json(payload, {
     headers: {
