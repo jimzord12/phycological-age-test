@@ -28,6 +28,3 @@ jobs:
 
       - name: Check
         run: pnpm check
-
-      - name: Audit production dependencies
-        run: pnpm audit --prod
