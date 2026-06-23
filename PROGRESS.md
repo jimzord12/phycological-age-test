@@ -5,7 +5,7 @@ maps remaining work to the self-contained issues in [`docs/issues/`](docs/issues
 
 **Legend:** ✅ done · 🟡 in progress · ⬜ not started
 
-Last updated: 2026-06-23 (I013 ✅)
+Last updated: 2026-06-23 (I014 ✅)
 
 ---
 
@@ -17,7 +17,7 @@ Last updated: 2026-06-23 (I013 ✅)
 | A     | API foundation: questionnaire + score endpoints                       | ✅ done |
 | B     | Client flow: consent → questionnaire → review → deterministic results | ✅ done |
 | C     | AI layer: provider abstraction, analyze endpoint, safety service      | ✅ done |
-| D     | Cross-cutting: observability, rate limiting, security hardening, CI   | 🟡      |
+| D     | Cross-cutting: observability, rate limiting, security hardening, CI   | ✅ done |
 | E     | QA: E2E journeys, accessibility suite, AI evaluation set              | ⬜      |
 | F     | Delivery: privacy policy draft, threat model, deployment docs         | ⬜      |
 
@@ -58,7 +58,7 @@ Last updated: 2026-06-23 (I013 ✅)
 | [I011](docs/issues/I011-analyze-api.md)              | `POST /api/v1/assessments/analyze` + strict schema      | C     | I002, I010, I012 | ✅         |
 | [I012](docs/issues/I012-safety-service.md)           | Safety service + help-resource selection                | C     | Phase 0          | ✅         |
 | [I013](docs/issues/I013-observability-rate-limit.md) | Privacy-safe observability + rate limiting              | D     | I002             | ✅         |
-| [I014](docs/issues/I014-security-hardening.md)       | Security hardening (CSP, escaping, limits)              | D     | I002, I008       | 3          |
+| [I014](docs/issues/I014-security-hardening.md)       | Security hardening (CSP, escaping, limits)              | D     | I002, I008       | ✅         |
 | [I015](docs/issues/I015-e2e-tests.md)                | E2E test journeys (Playwright)                          | E     | I008, I009, I011 | 4          |
 | [I016](docs/issues/I016-accessibility-suite.md)      | Accessibility test suite + audit                        | E     | I008             | 3          |
 | [I017](docs/issues/I017-ai-eval-fixtures.md)         | AI evaluation fixtures + harness                        | E     | I011             | 3          |
