@@ -8,13 +8,13 @@ Update this file at the end of your session (replace stale "what's next" with re
 > the **top** of this file. If you see one, your first action is to compress/distill
 > KNOWLEDGE.md before anything else.
 
-_Last updated: 2026-06-23 (I014 landed)_
+_Last updated: 2026-06-28 (I016 landed)_
 
 ---
 
 ## Where things stand
 
-**Phase 0, Phase A, Phase B (I001–I009), I010, I011, I012, I013, and I014 are complete (Phases C and D done). 416 tests pass.**
+**Phase 0–D complete (I001–I014), I016 complete. 416 unit tests + 124 Playwright a11y tests pass.**
 
 - Phase 0: pure domain layer — canonical bank, scoring, confidence, narrative scoring.
 - I001: `GET /api/v1/questionnaire` (score-free, Zod-validated, cached).
@@ -189,23 +189,42 @@ What exists today:
   Content-Type enforcement on both API routes, and absence of `NEXT_PUBLIC_`-prefixed env vars
   in `ai-provider.ts`.
 
-What does **not** exist yet: E2E/a11y tests (I015, I016), AI eval fixtures (I017).
+What does **not** exist yet: E2E tests (I015), AI eval fixtures (I017).
+
+- **I016** (accessibility test suite + audit) — DONE. See below.
+
+## I016 — Accessibility test suite (DONE)
+
+- **`playwright.config.ts`**: `@playwright/test` + Chromium at `/opt/pw-browsers/chromium`; runs `**/*.a11y.test.ts` files; 2 projects: `chromium` (Desktop) and `mobile` (Pixel 5); web-server auto-starts on port 3000.
+- **`@axe-core/playwright`**: `assertNoA11yViolations()` helper; WCAG 2.1 AA tags on every screen.
+- **`tests/a11y/helpers/`**: `axe-helper.ts` (axe runner + `seedState` via `page.addInitScript()`), `state-seeds.ts` (session-storage factories for all 6 screens).
+- **Test files** (61 tests × 2 projects = 124 total, all pass):
+  - `landing.a11y.test.ts` — lang attr, h1, button focus, details keyboard, landmarks.
+  - `consent.a11y.test.ts` — checkboxes labeled, Continue `aria-disabled`, fieldset legends.
+  - `questionnaire.a11y.test.ts` — radiogroup `aria-labelledby`, arrow-key nav, progress bar `aria-label`, dimension label, NA distinct.
+  - `narrative.a11y.test.ts` — textarea labels, `aria-live` word count, OPTIONAL badge, privacy notice, word-limit warning.
+  - `review.a11y.test.ts` — h1, buttons accessible, dimension headings, status as text.
+  - `results.a11y.test.ts` — `role="note"` disclaimer, `role="img"` bars, SMI text, loading `aria-busy`/`aria-live`, error `role="alert"`, insufficient "Insufficient data", age metaphor copy.
+- **`tests/a11y/manual-checks.md`**: 25 manual checks across 8 sections (keyboard, screen-reader, contrast, zoom, motion, focus mgmt, lang, touch targets).
+- **CSS fix**: `--text-muted` raised from `#777092` → `#9290b0` (contrast 3.81 → ~6.5:1).
+- **questionnaire-shell.tsx**: removed `opacity: isNA ? 0.75 : 1` from NA option label (was reducing effective contrast below 4.5:1; `--text-muted` color already distinguishes it).
+- **results.a11y.test.ts**: error state locator uses `:not(#__next-route-announcer__)` to exclude Next.js's own route-change `role="alert"`.
+- **Scripts added to `package.json`**: `test:a11y`, `test:a11y:mobile`, `test:a11y:report`.
 
 ## Git / environment
 
-- Repo: `jimzord12/phycological-age-test`. Working branch: `claude/eager-cori-4pg5mx`.
+- Repo: `jimzord12/phycological-age-test`. Working branch for I016: `feat/I016-accessibility-suite`.
 - `pnpm install` → `pnpm test` / `pnpm typecheck` / `pnpm build`. Node ≥ 22.
 - `jsdom` is a devDependency (I003). Use `// @vitest-environment jsdom` for DOM test files.
+- Playwright: pre-installed Chromium at `/opt/pw-browsers/chromium`; `PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1` prevents re-fetch. Run a11y tests with `pnpm test:a11y`.
 
 ## Recommended next steps
 
-1. **I015** (E2E test journeys, Playwright) — XL tier; depends on I011 ✅. Warrants its own branch.
+1. **I015** (E2E test journeys, Playwright) — XL tier; depends on I011 ✅. Playwright infrastructure is already set up (I016). Warrants its own branch.
 
-2. **I016** (accessibility test suite + audit) — M tier; depends on I008 ✅.
+2. **I017** (AI evaluation fixtures + harness) — M tier; depends on I011 ✅.
 
-3. **I017** (AI evaluation fixtures + harness) — M tier; depends on I011 ✅.
-
-4. **I018** (delivery docs — privacy policy draft, threat model, deploy guide) — XS tier; no blockers.
+3. **I018** (delivery docs — privacy policy draft, threat model, deploy guide) — XS tier; no blockers.
 
 ## Things to keep in mind (gotchas → see KNOWLEDGE.md for detail)
 

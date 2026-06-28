@@ -230,7 +230,6 @@ export function QuestionnaireShell() {
                 background: isSelected ? "rgba(167, 139, 250, 0.08)" : "var(--surface)",
                 cursor: "pointer",
                 transition: "border-color 0.15s, background 0.15s",
-                opacity: isNA ? 0.75 : 1,
               }}
             >
               <input
