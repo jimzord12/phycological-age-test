@@ -11,15 +11,15 @@ Last updated: 2026-06-28 (I016 ✅)
 
 ## Milestone overview
 
-| Phase | Theme                                                                 | Status      |
-| ----- | --------------------------------------------------------------------- | ----------- |
-| 0     | Domain core: types, canonical bank, deterministic scoring + tests     | ✅ done     |
-| A     | API foundation: questionnaire + score endpoints                       | ✅ done     |
-| B     | Client flow: consent → questionnaire → review → deterministic results | ✅ done     |
-| C     | AI layer: provider abstraction, analyze endpoint, safety service      | ✅ done     |
-| D     | Cross-cutting: observability, rate limiting, security hardening, CI   | ✅ done     |
+| Phase | Theme                                                                 | Status     |
+| ----- | --------------------------------------------------------------------- | ---------- |
+| 0     | Domain core: types, canonical bank, deterministic scoring + tests     | ✅ done    |
+| A     | API foundation: questionnaire + score endpoints                       | ✅ done    |
+| B     | Client flow: consent → questionnaire → review → deterministic results | ✅ done    |
+| C     | AI layer: provider abstraction, analyze endpoint, safety service      | ✅ done    |
+| D     | Cross-cutting: observability, rate limiting, security hardening, CI   | ✅ done    |
 | E     | QA: E2E journeys, accessibility suite, AI evaluation set              | 🟡 partial |
-| F     | Delivery: privacy policy draft, threat model, deployment docs         | ⬜          |
+| F     | Delivery: privacy policy draft, threat model, deployment docs         | ⬜         |
 
 ---
 
