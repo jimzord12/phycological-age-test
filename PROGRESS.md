@@ -5,21 +5,21 @@ maps remaining work to the self-contained issues in [`docs/issues/`](docs/issues
 
 **Legend:** ✅ done · 🟡 in progress · ⬜ not started
 
-Last updated: 2026-06-23 (I014 ✅)
+Last updated: 2026-06-28 (I016 ✅)
 
 ---
 
 ## Milestone overview
 
-| Phase | Theme                                                                 | Status  |
-| ----- | --------------------------------------------------------------------- | ------- |
-| 0     | Domain core: types, canonical bank, deterministic scoring + tests     | ✅ done |
-| A     | API foundation: questionnaire + score endpoints                       | ✅ done |
-| B     | Client flow: consent → questionnaire → review → deterministic results | ✅ done |
-| C     | AI layer: provider abstraction, analyze endpoint, safety service      | ✅ done |
-| D     | Cross-cutting: observability, rate limiting, security hardening, CI   | ✅ done |
-| E     | QA: E2E journeys, accessibility suite, AI evaluation set              | ⬜      |
-| F     | Delivery: privacy policy draft, threat model, deployment docs         | ⬜      |
+| Phase | Theme                                                                 | Status      |
+| ----- | --------------------------------------------------------------------- | ----------- |
+| 0     | Domain core: types, canonical bank, deterministic scoring + tests     | ✅ done     |
+| A     | API foundation: questionnaire + score endpoints                       | ✅ done     |
+| B     | Client flow: consent → questionnaire → review → deterministic results | ✅ done     |
+| C     | AI layer: provider abstraction, analyze endpoint, safety service      | ✅ done     |
+| D     | Cross-cutting: observability, rate limiting, security hardening, CI   | ✅ done     |
+| E     | QA: E2E journeys, accessibility suite, AI evaluation set              | 🟡 partial |
+| F     | Delivery: privacy policy draft, threat model, deployment docs         | ⬜          |
 
 ---
 
@@ -60,7 +60,7 @@ Last updated: 2026-06-23 (I014 ✅)
 | [I013](docs/issues/I013-observability-rate-limit.md) | Privacy-safe observability + rate limiting              | D     | I002             | ✅         |
 | [I014](docs/issues/I014-security-hardening.md)       | Security hardening (CSP, escaping, limits)              | D     | I002, I008       | ✅         |
 | [I015](docs/issues/I015-e2e-tests.md)                | E2E test journeys (Playwright)                          | E     | I008, I009, I011 | 4          |
-| [I016](docs/issues/I016-accessibility-suite.md)      | Accessibility test suite + audit                        | E     | I008             | 3          |
+| [I016](docs/issues/I016-accessibility-suite.md)      | Accessibility test suite + audit                        | E     | I008             | ✅         |
 | [I017](docs/issues/I017-ai-eval-fixtures.md)         | AI evaluation fixtures + harness                        | E     | I011             | 3          |
 | [I018](docs/issues/I018-delivery-docs.md)            | Privacy policy draft, threat model, deployment docs     | F     | —                | 2          |
 | [I019](docs/issues/I019-ci-pipeline.md)              | Minimal CI pipeline (GitHub Actions)                    | D     | —                | ✅         |
@@ -101,7 +101,7 @@ cases and iteration rounds can push any issue up a tier.
 | I013    | Observability + rate limiting      | **S**  | Structured events, scrubber, rate-limit middleware                  |
 | I014    | Security hardening                 | **M**  | CSP headers, escaping audit, CI scanning                            |
 | I015    | E2E test journeys (Playwright)     | **XL** | 13 journeys, Playwright setup, mocked AI layer                      |
-| I016    | Accessibility suite + audit        | **M**  | axe-core integration, manual check docs                             |
+| I016 ✅ | Accessibility suite + audit        | **M**  | axe-core integration, manual check docs                             |
 | I017    | AI evaluation fixtures + harness   | **M**  | Synthetic fixtures, eval metrics, harness runner                    |
 | I018    | Delivery docs                      | **XS** | Prose only — privacy policy draft, threat model, deploy guide       |
 | I019    | CI pipeline                        | **XS** | Single YAML file; no new logic or test infrastructure               |
