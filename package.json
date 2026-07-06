@@ -23,10 +23,10 @@
     "prepare": "husky"
   },
   "dependencies": {
-    "@ai-sdk/anthropic": "^3.0.85",
-    "@ai-sdk/openai": "^3.0.74",
-    "ai": "^6.0.208",
-    "next": "16.2.9",
+    "@ai-sdk/anthropic": "^4.0.8",
+    "@ai-sdk/openai": "^4.0.8",
+    "ai": "^7.0.16",
+    "next": "16.2.10",
     "react": "19.2.7",
     "react-dom": "19.2.7",
     "zod": "^4.4.3"
